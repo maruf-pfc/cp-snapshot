@@ -1,24 +1,25 @@
 import React from "react";
 import { useContestStore } from "../hooks/useContestStore";
 import { themes } from "../utils/themes";
-import clsx from "clsx";
 
 const ThemeSelector: React.FC = () => {
   const { activeTheme, setActiveTheme } = useContestStore();
 
   return (
-    <div className="flex gap-3 flex-wrap">
+    <div className="flex flex-wrap gap-2">
       {Object.entries(themes).map(([key, theme]) => (
         <button
           key={key}
           onClick={() => setActiveTheme(key)}
-          className={clsx(
-            "px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200",
-            "hover:shadow-lg active:scale-[0.98]",
-            activeTheme === key
-              ? "bg-blue-600 text-white shadow-blue-500/25"
-              : "bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700",
-          )}
+          className={`
+            px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200
+            border min-w-17.5 sm:min-w-0
+            ${
+              activeTheme === key
+                ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20"
+                : "bg-zinc-800/50 text-zinc-300 border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600"
+            }
+          `}
         >
           {theme.name}
         </button>
