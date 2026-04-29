@@ -7,24 +7,26 @@ import { Trophy, Sparkles } from "lucide-react";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
-      {/* Header */}
-      <header className="border-b border-gray-800 bg-gray-950/50 backdrop-blur-sm sticky top-0 z-10">
+    <div className="min-h-screen bg-bg-base text-text-primary">
+      {/* Header with subtle animation */}
+      <header className="border-b border-border-subtle bg-bg-base/80 backdrop-blur-xl sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-600/10 rounded-xl">
-              <Trophy className="w-6 h-6 text-blue-500" />
+            <div className="p-2 bg-accent-primary/10 rounded-xl border border-accent-primary/20">
+              <Trophy className="w-5 h-5 text-accent-primary" />
             </div>
             <div>
-              <h1 className="text-xl font-bold">CP Snapshot</h1>
-              <p className="text-sm text-gray-500">
-                Generate beautiful contest snapshots
+              <h1 className="text-lg font-bold bg-linear-to-r from-text-primary to-text-secondary bg-clip-text text-transparent">
+                CP Snapshot
+              </h1>
+              <p className="text-xs text-text-muted">
+                Craft beautiful contest cards
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Sparkles className="w-4 h-4" />
-            <span>v1.0</span>
+          <div className="flex items-center gap-2 text-xs text-text-muted">
+            <Sparkles className="w-3.5 h-3.5 text-accent-secondary" />
+            <span className="hidden sm:inline">v1.0</span>
           </div>
         </div>
       </header>
@@ -33,29 +35,29 @@ function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel - Controls */}
-          <div className="space-y-8">
+          <div className="space-y-7">
             {/* Platform Selection */}
-            <section>
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span className="w-1 h-6 bg-blue-500 rounded-full" />
-                Select Platforms
+            <section className="card-base p-5 space-y-4">
+              <h2 className="text-base font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-accent-primary rounded-full" />
+                Platforms
               </h2>
               <PlatformSelector />
             </section>
 
             {/* Contest Form */}
-            <section>
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span className="w-1 h-6 bg-blue-500 rounded-full" />
+            <section className="card-base p-5 space-y-4">
+              <h2 className="text-base font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-accent-primary rounded-full" />
                 Contest Details
               </h2>
               <ContestForm />
             </section>
 
             {/* Theme Selection */}
-            <section>
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span className="w-1 h-6 bg-blue-500 rounded-full" />
+            <section className="card-base p-5 space-y-4">
+              <h2 className="text-base font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-accent-primary rounded-full" />
                 Theme
               </h2>
               <ThemeSelector />
@@ -64,14 +66,17 @@ function App() {
 
           {/* Right Panel - Preview */}
           <div className="space-y-6">
-            <h2 className="text-lg font-semibold flex items-center gap-2">
-              <span className="w-1 h-6 bg-blue-500 rounded-full" />
+            <h2 className="text-base font-semibold flex items-center gap-2">
+              <span className="w-1.5 h-5 bg-accent-primary rounded-full" />
               Preview
             </h2>
 
-            {/* Preview Container */}
-            <div className="flex justify-center p-8 bg-gray-900/50 rounded-2xl border border-gray-800 overflow-auto">
-              <div data-snapshot-card>
+            {/* Preview Container with subtle animation */}
+            <div className="card-base p-6 flex justify-center items-center min-h-100 overflow-auto">
+              <div
+                data-snapshot-card
+                className="transition-transform duration-300 hover:scale-[1.01]"
+              >
                 <SnapshotCard />
               </div>
             </div>
@@ -83,9 +88,9 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-800 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-sm text-gray-600">
-          Built with React 19 + Vite + TailwindCSS v4 • 100% client-side
+      <footer className="border-t border-border-subtle mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-xs text-text-muted">
+          Crafted with ❤️ for competitive programmers • 100% client-side
         </div>
       </footer>
     </div>

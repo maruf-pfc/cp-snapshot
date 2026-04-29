@@ -25,9 +25,9 @@ const ContestForm: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-text-secondary mb-2">
           Contest Name
         </label>
         <input
@@ -40,37 +40,37 @@ const ContestForm: React.FC = () => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-text-secondary mb-2">
           Start Time
         </label>
         <div className="relative">
-          <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-text-muted" />
           <input
             type="datetime-local"
             value={startDateTime}
             onChange={(e) => setStartDateTime(e.target.value)}
-            className="input-field pl-12"
+            className="input-field pl-11"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-text-secondary mb-2">
           Duration
         </label>
-        <div className="flex gap-3">
+        <div className="flex gap-2.5">
           <div className="relative flex-1">
-            <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-text-muted" />
             <input
               type="number"
               min="0"
               max="48"
               value={Math.floor(duration / 60)}
               onChange={handleDurationHours}
-              placeholder="Hours"
-              className="input-field pl-12"
+              placeholder="0"
+              className="input-field pl-11"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted text-xs">
               hrs
             </span>
           </div>
@@ -81,10 +81,10 @@ const ContestForm: React.FC = () => {
               max="59"
               value={duration % 60}
               onChange={handleDurationMinutes}
-              placeholder="Minutes"
+              placeholder="0"
               className="input-field"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted text-xs">
               min
             </span>
           </div>

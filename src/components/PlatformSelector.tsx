@@ -1,73 +1,61 @@
 import React from "react";
 import { useContestStore } from "../hooks/useContestStore";
 import { platforms } from "../utils/platforms";
-import clsx from "clsx";
-import type { Platform } from "../types";
-
-interface PlatformLogoProps {
-  platform: Platform;
-  size?: number;
-}
-
-const PlatformLogo: React.FC<PlatformLogoProps> = ({ platform, size = 24 }) => (
-  <div
-    className="flex items-center justify-center"
-    style={{ width: size, height: size }}
-  >
-    <div
-      className="rounded-lg flex items-center justify-center font-bold text-white text-xs"
-      style={{ backgroundColor: platform.color, width: size, height: size }}
-    >
-      {platform.name.charAt(0)}
-    </div>
-  </div>
-);
+import { Check } from "lucide-react";
 
 const PlatformSelector: React.FC = () => {
   const { selectedPlatforms, togglePlatform } = useContestStore();
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
       {platforms.map((platform) => {
         const isSelected = selectedPlatforms.some((p) => p.id === platform.id);
         return (
           <button
             key={platform.id}
             onClick={() => togglePlatform(platform)}
-            className={clsx(
-              "flex items-center gap-3 p-3 rounded-xl border transition-all duration-200",
-              "hover:shadow-lg active:scale-[0.98]",
-              isSelected
-                ? "bg-blue-600/10 border-blue-500 shadow-blue-500/10"
-                : "bg-gray-800/50 border-gray-700 hover:border-gray-600",
-            )}
+            className={`
+              group relative flex items-center gap-3 px-3 py-2.5 rounded-xl border 
+              transition-all duration-200 ease-out text-left
+              ${
+                isSelected
+                  ? "bg-(--accent)/10 border-(--accent)/50 shadow-[0_0_20px_rgba(0,0,0,0.15)]"
+                  : "bg-(--surface) border-(--border) hover:border-(--border)/80 hover:bg-(--surface)/90"
+              }
+            `}
+            style={{ "--accent": platform.color } as React.CSSProperties}
           >
-            <div
-              className={clsx(
-                "w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all",
-                isSelected ? "bg-blue-600 border-blue-600" : "border-gray-600",
-              )}
-            >
-              {isSelected && (
-                <svg
-                  className="w-3 h-3 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              )}
+            {/* Logo */}
+            <div className="w-7 h-7 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center shrink-0 border border-white/5">
+              <img
+                src={platform.logo}
+                alt={platform.name}
+                className="w-5 h-5 object-contain mix-blend-normal"
+                loading="lazy"
+              />
             </div>
-            <PlatformLogo platform={platform} size={20} />
-            <span className="text-sm font-medium text-gray-200">
+
+            {/* Name */}
+            <span
+              className={`text-sm font-medium truncate ${isSelected ? "text-(--text)" : "text-(--text-sec)"}`}
+            />
+            <span
+              className={`text-sm font-medium truncate ${isSelected ? "text-white" : "text-zinc-400 group-hover:text-zinc-200"}`}
+            >
               {platform.name}
             </span>
+
+            {/* Selection indicator */}
+            <div
+              className={`
+              ml-auto w-4 h-4 rounded-md border flex items-center justify-center transition-all
+              ${isSelected ? "border-(--accent) bg-(--accent)" : "border-zinc-700 group-hover:border-zinc-500"}
+            `}
+            >
+              {isSelected && (
+                <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />
+              )}
+            </div>
           </button>
         );
       })}

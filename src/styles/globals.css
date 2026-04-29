@@ -1,41 +1,105 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
-  
-  --color-border: hsl(215 28% 17%);
-  
-  --color-neon-primary: #00ff88;
-  --color-neon-secondary: #00ccff;
-  --color-neon-accent: #ff00ff;
+
+  /* Human-crafted colors */
+  --color-bg-base: #09090b;
+  --color-bg-surface: #18181b;
+  --color-bg-elevated: #27272a;
+  --color-border-subtle: #27272a;
+  --color-border-focus: #8b5cf6;
+
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+
+  --color-accent-primary: #8b5cf6;
+  --color-accent-secondary: #22d3ee;
+  --color-accent-glow: rgba(139, 92, 246, 0.15);
+
+  /* Platform colors - curated */
+  --color-platform-codeforces: #6366f1;
+  --color-platform-leetcode: #f59e0b;
+  --color-platform-codechef: #a78bfa;
+  --color-platform-atcoder: #22d3ee;
+  --color-platform-kaggle: #34d399;
+  --color-platform-codingninjas: #f472b6;
+  --color-platform-gfg: #84cc16;
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border-subtle;
   }
   body {
-    @apply bg-gray-950 text-gray-100 font-sans antialiased;
+    @apply bg-bg-base text-text-primary font-sans antialiased;
+    background-image:
+      radial-gradient(
+        ellipse at 20% 80%,
+        rgba(139, 92, 246, 0.08) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 80% 20%,
+        rgba(34, 211, 238, 0.08) 0%,
+        transparent 50%
+      );
+    background-attachment: fixed;
+  }
+
+  /* Subtle noise texture for organic feel */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: -1;
   }
 }
 
 @layer components {
   .input-field {
-    @apply w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl 
-           text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 
-           focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200;
+    @apply w-full px-4 py-3 bg-bg-surface border border-border-subtle rounded-xl 
+           text-text-primary placeholder-text-muted 
+           focus:outline-none focus:ring-2 focus:ring-accent-primary/30 focus:border-accent-primary 
+           transition-all duration-200 ease-out;
   }
-  
+
   .btn-primary {
-    @apply px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl 
-           transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25 
-           active:scale-[0.98];
+    @apply px-5 py-2.5 bg-accent-primary hover:bg-violet-500 text-white font-medium rounded-xl 
+           transition-all duration-200 ease-out
+           hover:shadow-lg hover:shadow-accent-glow 
+           active:scale-[0.98] active:translate-y-px;
   }
-  
+
   .btn-secondary {
-    @apply px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium rounded-xl 
-           border border-gray-700 transition-all duration-200 hover:shadow-lg 
-           hover:shadow-gray-900/25 active:scale-[0.98];
+    @apply px-5 py-2.5 bg-bg-surface hover:bg-bg-elevated text-text-primary font-medium rounded-xl 
+           border border-border-subtle 
+           transition-all duration-200 ease-out
+           hover:shadow-lg hover:shadow-black/20 
+           active:scale-[0.98] active:translate-y-px;
   }
+
+  .card-base {
+    @apply rounded-2xl border border-border-subtle bg-bg-surface 
+           shadow-xl shadow-black/20;
+  }
+
+  .platform-chip {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-lg 
+           text-sm font-medium transition-all duration-200
+           hover:scale-[1.02] active:scale-[0.98];
+  }
+}
+
+/* Smooth scroll + focus */
+html {
+  scroll-behavior: smooth;
+}
+:focus-visible {
+  @apply outline-none ring-2 ring-accent-primary/50 ring-offset-2 ring-offset-bg-base;
 }

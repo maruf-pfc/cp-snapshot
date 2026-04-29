@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ContestState, ContestActions, Platform } from "../types";
+import type { ContestState, ContestActions } from "../types";
 
 type ContestStore = ContestState & ContestActions;
 
@@ -8,12 +8,12 @@ export const useContestStore = create<ContestStore>()((set) => ({
   startDateTime: "",
   duration: 120,
   selectedPlatforms: [],
-  activeTheme: "dark",
+  activeTheme: "midnight",
 
   setContestName: (name) => set({ contestName: name }),
   setStartDateTime: (dateTime) => set({ startDateTime: dateTime }),
   setDuration: (minutes) => set({ duration: minutes }),
-  togglePlatform: (platform: Platform) =>
+  togglePlatform: (platform) =>
     set((state) => {
       const exists = state.selectedPlatforms.find((p) => p.id === platform.id);
       return {
