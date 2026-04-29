@@ -1,8 +1,9 @@
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef } from "react";
 import { useContestStore } from "../hooks/useContestStore";
 import { themes } from "../utils/themes";
-import { calculateTimeLeft, formatDuration } from "../utils/formatters";
+import { formatDuration } from "../utils/formatters";
 import { format } from "date-fns";
+import { useLiveTimeLeft } from "../hooks/useLiveTimeLeft";
 
 interface SnapshotCardProps {
   themeKey?: string;
@@ -19,19 +20,8 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
     } = useContestStore();
     const theme = themes[themeKey || activeTheme] || themes.midnight;
 
-    const [liveTimeLeft, setLiveTimeLeft] = useState(
-      calculateTimeLeft(startDateTime),
-    );
-
-    useEffect(() => {
-      setLiveTimeLeft(calculateTimeLeft(startDateTime));
-      if (!startDateTime) return;
-      const timer = setInterval(
-        () => setLiveTimeLeft(calculateTimeLeft(startDateTime)),
-        1000,
-      );
-      return () => clearInterval(timer);
-    }, [startDateTime]);
+    // ← Live time left via custom hook
+    const liveTimeLeft = useLiveTimeLeft(startDateTime);
 
     const startTimeStr = startDateTime
       ? format(new Date(startDateTime), "MMM d, yyyy • HH:mm")

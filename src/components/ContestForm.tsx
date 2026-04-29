@@ -1,7 +1,7 @@
 import React from "react";
 import { useContestStore } from "../hooks/useContestStore";
 import { Calendar, Clock, Link } from "lucide-react";
-import { calculateTimeLeft } from "../utils/formatters";
+import { useLiveTimeLeft } from "../hooks/useLiveTimeLeft";
 
 const ContestForm: React.FC = () => {
   const {
@@ -15,23 +15,8 @@ const ContestForm: React.FC = () => {
     setDuration,
   } = useContestStore();
 
-  // Live-updating time left display
-  const [liveTimeLeft, setLiveTimeLeft] = React.useState(
-    calculateTimeLeft(startDateTime),
-  );
-
-  React.useEffect(() => {
-    if (!startDateTime) {
-      setLiveTimeLeft("Not specified");
-      return;
-    }
-    setLiveTimeLeft(calculateTimeLeft(startDateTime));
-    const timer = setInterval(
-      () => setLiveTimeLeft(calculateTimeLeft(startDateTime)),
-      1000,
-    );
-    return () => clearInterval(timer);
-  }, [startDateTime]);
+  // ← Live time left via custom hook (no setState in effect!)
+  const liveTimeLeft = useLiveTimeLeft(startDateTime);
 
   const handleDurationHours = (e: React.ChangeEvent<HTMLInputElement>) => {
     const hours = parseInt(e.target.value) || 0;
