@@ -19,7 +19,7 @@ export interface ContestActions {
   setStartDateTime: (dateTime: string) => void;
   setContestLink: (link: string) => void;
   setDuration: (minutes: number) => void;
-  togglePlatform: (platform: Platform) => void;
+  selectPlatform: (platform: Platform) => void;
   setActiveTheme: (theme: string) => void;
   reset: () => void;
 }

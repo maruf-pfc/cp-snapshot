@@ -15,15 +15,24 @@ export const useContestStore = create<ContestStore>()((set) => ({
   setStartDateTime: (dateTime) => set({ startDateTime: dateTime }),
   setContestLink: (link) => set({ contestLink: link }),
   setDuration: (minutes) => set({ duration: minutes }),
-  togglePlatform: (platform) =>
-    set((state) => {
-      const exists = state.selectedPlatforms.find((p) => p.id === platform.id);
-      return {
-        selectedPlatforms: exists
-          ? state.selectedPlatforms.filter((p) => p.id !== platform.id)
-          : [...state.selectedPlatforms, platform],
-      };
-    }),
+
+  // togglePlatform: (platform) =>
+  //   set((state) => {
+  //     const exists = state.selectedPlatforms.find((p) => p.id === platform.id);
+  //     return {
+  //       selectedPlatforms: exists
+  //         ? state.selectedPlatforms.filter((p) => p.id !== platform.id)
+  //         : [...state.selectedPlatforms, platform],
+  //     };
+  //   }),
+
+  selectPlatform: (platform) => set((state) => {
+    const isAlreadySelected = state.selectedPlatforms.some(p => p.id === platform.id)
+    return { 
+      selectedPlatforms: isAlreadySelected ? [] : [platform] 
+    }
+  }),
+
   setActiveTheme: (theme) => set({ activeTheme: theme }),
   reset: () =>
     set({
