@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useContestStore } from "../hooks/useContestStore";
 import { themes } from "../utils/themes";
-import { formatDuration } from "../utils/formatters";
+import { calculateTimeLeft, formatDuration } from "../utils/formatters";
 import { format } from "date-fns";
 
 interface SnapshotCardProps {
@@ -13,21 +13,29 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
     const {
       contestName,
       startDateTime,
-      timeLeft,
       duration,
       selectedPlatforms,
       activeTheme,
     } = useContestStore();
     const theme = themes[themeKey || activeTheme] || themes.midnight;
 
+    const [liveTimeLeft, setLiveTimeLeft] = useState(
+      calculateTimeLeft(startDateTime),
+    );
+
+    useEffect(() => {
+      setLiveTimeLeft(calculateTimeLeft(startDateTime));
+      if (!startDateTime) return;
+      const timer = setInterval(
+        () => setLiveTimeLeft(calculateTimeLeft(startDateTime)),
+        1000,
+      );
+      return () => clearInterval(timer);
+    }, [startDateTime]);
+
     const startTimeStr = startDateTime
       ? format(new Date(startDateTime), "MMM d, yyyy • HH:mm")
       : "Not specified";
-
-    const timeLeftStr = timeLeft
-      ? format(new Date(timeLeft), "MMM d, yyyy • HH:mm")
-      : "Not specified";
-
     const durationStr = formatDuration(duration);
     const topAccent = selectedPlatforms[0]?.color || theme.accent;
 
@@ -42,7 +50,6 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
             "0 24px 60px -15px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.03)",
         }}
       >
-        {/* Subtle dot texture */}
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.03]"
           style={{
@@ -51,7 +58,6 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
           }}
         />
 
-        {/* Watermark */}
         {selectedPlatforms.length > 0 && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <img
@@ -69,13 +75,11 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
         )}
 
         <div className="relative p-5 sm:p-6 space-y-4 sm:space-y-5">
-          {/* Top accent */}
           <div
             className="h-0.5 w-full rounded-full -mt-5 -mx-5 sm:-mt-6 sm:-mx-6 mb-4"
             style={{ background: topAccent }}
           />
 
-          {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
             <div className="min-w-0 flex-1">
               <h1
@@ -84,8 +88,6 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
               >
                 {contestName || "Contest Name"}
               </h1>
-
-              {/* Platform pills */}
               {selectedPlatforms.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2.5">
                   {selectedPlatforms.map((platform) => (
@@ -111,7 +113,6 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
                 </div>
               )}
             </div>
-
             <div
               className="px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider border self-start shrink-0"
               style={{
@@ -124,35 +125,42 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
             </div>
           </div>
 
-          {/* Info Grid */}
           <div className="space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                { label: "Starts", value: startTimeStr },
-                { label: "Time Left", value: timeLeftStr },
-              ].map((item) => (
+              <div
+                className="p-4 rounded-xl border"
+                style={{ background: theme.surface, borderColor: theme.border }}
+              >
                 <div
-                  key={item.label}
-                  className="p-4 rounded-xl border"
-                  style={{
-                    background: theme.surface,
-                    borderColor: theme.border,
-                  }}
+                  className="text-[10px] font-medium uppercase tracking-widest mb-1"
+                  style={{ color: theme.textSec }}
                 >
-                  <div
-                    className="text-[10px] font-medium uppercase tracking-widest mb-1"
-                    style={{ color: theme.textSec }}
-                  >
-                    {item.label}
-                  </div>
-                  <div
-                    className="text-sm font-medium truncate"
-                    style={{ color: theme.text }}
-                  >
-                    {item.value}
-                  </div>
+                  Starts
                 </div>
-              ))}
+                <div
+                  className="text-sm font-medium truncate"
+                  style={{ color: theme.text }}
+                >
+                  {startTimeStr}
+                </div>
+              </div>
+              <div
+                className="p-4 rounded-xl border"
+                style={{ background: theme.surface, borderColor: theme.border }}
+              >
+                <div
+                  className="text-[10px] font-medium uppercase tracking-widest mb-1"
+                  style={{ color: theme.textSec }}
+                >
+                  Time Left
+                </div>
+                <div
+                  className="text-sm font-medium truncate"
+                  style={{ color: theme.text }}
+                >
+                  {liveTimeLeft}
+                </div>
+              </div>
             </div>
             <div
               className="p-4 rounded-xl border"
@@ -173,7 +181,6 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
             </div>
           </div>
 
-          {/* Footer */}
           <div
             className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-4 border-t"
             style={{ borderColor: theme.border }}
