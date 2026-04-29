@@ -1,4 +1,3 @@
-import React from "react";
 import PlatformSelector from "./components/PlatformSelector";
 import ContestForm from "./components/ContestForm";
 import ThemeSelector from "./components/ThemeSelector";
