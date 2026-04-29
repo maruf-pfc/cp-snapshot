@@ -16,41 +16,30 @@ const PlatformSelector: React.FC = () => {
             onClick={() => togglePlatform(platform)}
             className={`
               group relative flex items-center gap-3 px-3 py-2.5 rounded-xl border 
-              transition-all duration-200 ease-out text-left
+              transition-all duration-200 ease-out text-left min-h-11
               ${
                 isSelected
-                  ? "bg-(--accent)/10 border-(--accent)/50 shadow-[0_0_20px_rgba(0,0,0,0.15)]"
+                  ? "bg-(--accent)/10 border-(--accent)/50 shadow-[0_0_15px_rgba(0,0,0,0.1)]"
                   : "bg-(--surface) border-(--border) hover:border-(--border)/80 hover:bg-(--surface)/90"
               }
             `}
             style={{ "--accent": platform.color } as React.CSSProperties}
           >
-            {/* Logo */}
             <div className="w-7 h-7 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center shrink-0 border border-white/5">
               <img
                 src={platform.logo}
                 alt={platform.name}
-                className="w-5 h-5 object-contain mix-blend-normal"
+                className="w-5 h-5 object-contain"
                 loading="lazy"
               />
             </div>
-
-            {/* Name */}
-            <span
-              className={`text-sm font-medium truncate ${isSelected ? "text-(--text)" : "text-(--text-sec)"}`}
-            />
             <span
               className={`text-sm font-medium truncate ${isSelected ? "text-white" : "text-zinc-400 group-hover:text-zinc-200"}`}
             >
               {platform.name}
             </span>
-
-            {/* Selection indicator */}
             <div
-              className={`
-              ml-auto w-4 h-4 rounded-md border flex items-center justify-center transition-all
-              ${isSelected ? "border-(--accent) bg-(--accent)" : "border-zinc-700 group-hover:border-zinc-500"}
-            `}
+              className={`ml-auto w-4 h-4 rounded-md border flex items-center justify-center transition-all shrink-0 ${isSelected ? "border-(--accent) bg-(--accent)" : "border-zinc-700 group-hover:border-zinc-500"}`}
             >
               {isSelected && (
                 <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />

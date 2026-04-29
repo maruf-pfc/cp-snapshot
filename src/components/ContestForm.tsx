@@ -41,33 +41,34 @@ const ContestForm: React.FC = () => {
         />
       </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-2 text-zinc-400">
-          Starts In
-        </label>
-        <div className="relative">
-          <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-          <input
-            type="datetime-local"
-            value={startDateTime}
-            onChange={(e) => setStartDateTime(e.target.value)}
-            className="input-field pl-11"
-          />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-2 text-zinc-400">
+            Starts In
+          </label>
+          <div className="relative">
+            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <input
+              type="datetime-local"
+              value={startDateTime}
+              onChange={(e) => setStartDateTime(e.target.value)}
+              className="input-field pl-11"
+            />
+          </div>
         </div>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-2 text-zinc-400">
-          Time Left
-        </label>
-        <div className="relative">
-          <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-          <input
-            type="datetime-local"
-            value={timeLeft}
-            onChange={(e) => setTimeLeft(e.target.value)}
-            className="input-field pl-11"
-          />
+        <div>
+          <label className="block text-sm font-medium mb-2 text-zinc-400">
+            Time Left
+          </label>
+          <div className="relative">
+            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <input
+              type="datetime-local"
+              value={timeLeft}
+              onChange={(e) => setTimeLeft(e.target.value)}
+              className="input-field pl-11"
+            />
+          </div>
         </div>
       </div>
 
@@ -75,7 +76,7 @@ const ContestForm: React.FC = () => {
         <label className="block text-sm font-medium mb-2 text-zinc-400">
           Duration
         </label>
-        <div className="flex gap-2.5">
+        <div className="flex flex-col sm:flex-row gap-2.5">
           <div className="relative flex-1">
             <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
             <input
