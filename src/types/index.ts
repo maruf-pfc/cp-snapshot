@@ -8,7 +8,7 @@ export interface Platform {
 export interface ContestState {
   contestName: string;
   startDateTime: string;
-  timeLeft: string; // ← Added
+  contestLink: string;
   duration: number;
   selectedPlatforms: Platform[];
   activeTheme: string;
@@ -17,7 +17,7 @@ export interface ContestState {
 export interface ContestActions {
   setContestName: (name: string) => void;
   setStartDateTime: (dateTime: string) => void;
-  setTimeLeft: (dateTime: string) => void; // ← Added
+  setContestLink: (link: string) => void;
   setDuration: (minutes: number) => void;
   togglePlatform: (platform: Platform) => void;
   setActiveTheme: (theme: string) => void;
