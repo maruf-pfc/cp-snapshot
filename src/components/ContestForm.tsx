@@ -1,29 +1,46 @@
 import React from "react";
 import { useContestStore } from "../hooks/useContestStore";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, Link } from "lucide-react";
+import { calculateTimeLeft } from "../utils/formatters";
 
 const ContestForm: React.FC = () => {
   const {
     contestName,
     startDateTime,
-    timeLeft,
+    contestLink,
     duration,
     setContestName,
     setStartDateTime,
-    setTimeLeft,
+    setContestLink,
     setDuration,
   } = useContestStore();
 
+  // Live-updating time left display
+  const [liveTimeLeft, setLiveTimeLeft] = React.useState(
+    calculateTimeLeft(startDateTime),
+  );
+
+  React.useEffect(() => {
+    if (!startDateTime) {
+      setLiveTimeLeft("Not specified");
+      return;
+    }
+    setLiveTimeLeft(calculateTimeLeft(startDateTime));
+    const timer = setInterval(
+      () => setLiveTimeLeft(calculateTimeLeft(startDateTime)),
+      1000,
+    );
+    return () => clearInterval(timer);
+  }, [startDateTime]);
+
   const handleDurationHours = (e: React.ChangeEvent<HTMLInputElement>) => {
     const hours = parseInt(e.target.value) || 0;
-    const mins = duration % 60;
-    setDuration(hours * 60 + mins);
+    setDuration(hours * 60 + (duration % 60));
   };
 
   const handleDurationMinutes = (e: React.ChangeEvent<HTMLInputElement>) => {
     const mins = parseInt(e.target.value) || 0;
-    const hours = Math.floor(duration / 60);
-    setDuration(hours * 60 + Math.min(mins, 59));
+    setDuration(Math.floor(duration / 60) * 60 + Math.min(mins, 59));
   };
 
   return (
@@ -58,18 +75,27 @@ const ContestForm: React.FC = () => {
         </div>
         <div>
           <label className="block text-sm font-medium mb-2 text-zinc-400">
-            Time Left
+            Contest Link
           </label>
           <div className="relative">
-            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <Link className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
             <input
-              type="datetime-local"
-              value={timeLeft}
-              onChange={(e) => setTimeLeft(e.target.value)}
+              type="url"
+              value={contestLink}
+              onChange={(e) => setContestLink(e.target.value)}
+              placeholder="https://codeforces.com/..."
               className="input-field pl-11"
             />
           </div>
         </div>
+      </div>
+
+      {/* Live Time Left Display */}
+      <div className="p-3 rounded-xl bg-zinc-800/30 border border-zinc-700/50 flex items-center justify-between">
+        <span className="text-xs font-medium text-zinc-400">Time Left</span>
+        <span className="text-sm font-mono font-semibold text-zinc-100">
+          {liveTimeLeft}
+        </span>
       </div>
 
       <div>
