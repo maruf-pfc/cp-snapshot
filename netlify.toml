@@ -1,0 +1,11 @@
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  BUN_INSTALL = "/opt/buildhome/.bun"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

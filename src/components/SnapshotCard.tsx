@@ -197,7 +197,7 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
               className="text-[10px] font-mono text-left sm:text-right"
               style={{ color: theme.textSec }}
             >
-              cp-snapshot.dev
+              cp-snapshot.vercel.app
             </span>
           </div>
         </div>
