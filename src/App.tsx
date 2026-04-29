@@ -90,7 +90,15 @@ function App() {
       {/* Footer */}
       <footer className="border-t border-border-subtle mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-xs text-text-muted">
-          Crafted with ❤️ for competitive programmers • 100% client-side
+          Crafted with ❤️ for competitive programmers •{" "}
+          <a
+            href="https://www.linkedin.com/in/mdmarufsarker"
+            className="underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Md. Maruf Sarker
+          </a>
         </div>
       </footer>
     </div>
