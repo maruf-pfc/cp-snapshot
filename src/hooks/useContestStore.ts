@@ -6,14 +6,14 @@ type ContestStore = ContestState & ContestActions;
 export const useContestStore = create<ContestStore>()((set) => ({
   contestName: "",
   startDateTime: "",
-  timeLeft: "", // ← Added
+  contestLink: "",
   duration: 120,
   selectedPlatforms: [],
   activeTheme: "midnight",
 
   setContestName: (name) => set({ contestName: name }),
   setStartDateTime: (dateTime) => set({ startDateTime: dateTime }),
-  setTimeLeft: (dateTime) => set({ timeLeft: dateTime }), // ← Added
+  setContestLink: (link) => set({ contestLink: link }),
   setDuration: (minutes) => set({ duration: minutes }),
   togglePlatform: (platform) =>
     set((state) => {
@@ -29,7 +29,7 @@ export const useContestStore = create<ContestStore>()((set) => ({
     set({
       contestName: "",
       startDateTime: "",
-      timeLeft: "",
+      contestLink: "",
       duration: 120,
       selectedPlatforms: [],
     }),
