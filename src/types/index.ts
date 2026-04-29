@@ -1,35 +1,37 @@
 export interface Platform {
-  id: string
-  name: string
-  color: string
-  logo: string
+  id: string;
+  name: string;
+  color: string;
+  logo: string;
 }
 
 export interface ContestState {
-  contestName: string
-  startDateTime: string
-  duration: number
-  selectedPlatforms: Platform[]
-  activeTheme: string
+  contestName: string;
+  startDateTime: string;
+  timeLeft: string; // ← Added
+  duration: number;
+  selectedPlatforms: Platform[];
+  activeTheme: string;
 }
 
 export interface ContestActions {
-  setContestName: (name: string) => void
-  setStartDateTime: (dateTime: string) => void
-  setDuration: (minutes: number) => void
-  togglePlatform: (platform: Platform) => void
-  setActiveTheme: (theme: string) => void
-  reset: () => void
+  setContestName: (name: string) => void;
+  setStartDateTime: (dateTime: string) => void;
+  setTimeLeft: (dateTime: string) => void; // ← Added
+  setDuration: (minutes: number) => void;
+  togglePlatform: (platform: Platform) => void;
+  setActiveTheme: (theme: string) => void;
+  reset: () => void;
 }
 
 export type ThemeConfig = {
-  name: string
-  bg: string
-  surface: string
-  text: string
-  textSec: string
-  accent: string
-  border: string
-}
+  name: string;
+  bg: string;
+  surface: string;
+  text: string;
+  textSec: string;
+  accent: string;
+  border: string;
+};
 
-export type Themes = Record<string, ThemeConfig>
+export type Themes = Record<string, ThemeConfig>;
