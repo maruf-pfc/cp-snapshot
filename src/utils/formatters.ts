@@ -35,20 +35,35 @@ export const formatContestInfo = (contest: ContestState): string => {
     selectedPlatforms,
     contestLink,
   } = contest;
-  const platforms = selectedPlatforms.map((p) => p.name).join(", ");
+
+  const platformNames = Array.isArray(selectedPlatforms)
+    ? selectedPlatforms.filter((p) => p?.name).map((p) => p.name)
+    : [];
+
+  const platformsStr =
+    platformNames.length > 0 ? platformNames.join(", ") : "None selected";
+
   const startTime = startDateTime
-    ? new Date(startDateTime).toLocaleString()
+    ? new Date(startDateTime).toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      })
     : "Not specified";
+
   const durationStr = formatDuration(duration);
   const timeLeft = calculateTimeLeft(startDateTime);
 
-  let text = `📝 Contest: ${contestName}
-🌐 Platforms: ${platforms}
+  let text = `📝 Contest: ${contestName || "Unnamed Contest"}
+🌐 Platforms: ${platformsStr}
 🕐 Starts: ${startTime}
 ⏱️ Duration: ${durationStr}
 ⏳ Time Left: ${timeLeft}`;
 
-  if (contestLink) {
+  if (contestLink?.trim()) {
     text += `\n🔗 Link: ${contestLink}`;
   }
 
