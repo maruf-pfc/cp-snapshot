@@ -65,7 +65,7 @@ const ActionButtons: React.FC = () => {
       <button
         onClick={handleCopy}
         disabled={state !== "idle"}
-        className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center disabled:opacity-60"
+        className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
       >
         {state === "loading" ? (
           <Loader2 className="w-4 h-4 animate-spin" />
@@ -79,7 +79,7 @@ const ActionButtons: React.FC = () => {
       <button
         onClick={handleDownload}
         disabled={dlState !== "idle"}
-        className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl border border-zinc-700 transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center disabled:opacity-60"
+        className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl border border-zinc-700 transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
       >
         {dlState === "loading" ? (
           <Loader2 className="w-4 h-4 animate-spin" />
@@ -91,7 +91,7 @@ const ActionButtons: React.FC = () => {
       <button
         onClick={handleCopyText}
         disabled={txtState !== "idle"}
-        className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl border border-zinc-700 transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center disabled:opacity-60"
+        className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl border border-zinc-700 transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
       >
         {txtState === "success" ? (
           <Check className="w-4 h-4" />

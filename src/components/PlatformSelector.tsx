@@ -16,10 +16,10 @@ const PlatformSelector: React.FC = () => {
             onClick={() => togglePlatform(platform)}
             className={`
               group relative flex items-center gap-3 px-3 py-2.5 rounded-xl border 
-              transition-all duration-200 ease-out text-left min-h-11
+              transition-all duration-200 ease-out text-left min-h-11 cursor-pointer
               ${
                 isSelected
-                  ? "bg-(--accent)/10 border-(--accent)/50 shadow-[0_0_15px_rgba(0,0,0,0.1)]"
+                  ? "bg-(--accent)/10 border-(--accent)/50"
                   : "bg-(--surface) border-(--border) hover:border-(--border)/80 hover:bg-(--surface)/90"
               }
             `}

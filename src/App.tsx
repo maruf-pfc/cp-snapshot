@@ -69,8 +69,11 @@ function App() {
             </h2>
 
             {/* Scrollable container for mobile */}
-            <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 sm:p-6 flex justify-center items-start overflow-x-auto pb-2 snap-x snap-mandatory">
-              <div data-snapshot-card className="snap-center">
+            <div className="card-base p-4 sm:p-6 flex justify-center items-center overflow-hidden snap-x snap-mandatory">
+              <div
+                data-snapshot-card
+                className="snap-center w-full max-w-130"
+              >
                 <SnapshotCard />
               </div>
             </div>

@@ -32,7 +32,7 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
     return (
       <div
         ref={ref}
-        className="w-full max-w-130 min-w-70 rounded-2xl overflow-hidden border mx-auto"
+        className="relative w-full max-w-130 min-w-70 rounded-2xl overflow-hidden border mx-auto"
         style={{
           background: `linear-gradient(165deg, ${theme.surface} 0%, ${theme.bg} 100%)`,
           borderColor: theme.border,
