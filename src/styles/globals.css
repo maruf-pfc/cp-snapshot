@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  
+  --color-border: hsl(215 28% 17%);
+  
+  --color-neon-primary: #00ff88;
+  --color-neon-secondary: #00ccff;
+  --color-neon-accent: #ff00ff;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-gray-950 text-gray-100 font-sans antialiased;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl 
+           text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 
+           focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl 
+           transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25 
+           active:scale-[0.98];
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium rounded-xl 
+           border border-gray-700 transition-all duration-200 hover:shadow-lg 
+           hover:shadow-gray-900/25 active:scale-[0.98];
+  }
+}
