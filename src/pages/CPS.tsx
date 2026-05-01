@@ -5,7 +5,7 @@ import { useContestStore } from "../hooks/useContestStore";
 import { platforms } from "../utils/platforms";
 import ThemeSelector from "../components/ThemeSelector";
 import SnapshotCard from "../components/SnapshotCard";
-import { Copy, Download, Check, Loader2 } from "lucide-react";
+import { Copy, Download, Check, Loader2, Star } from "lucide-react";
 import { toPng } from "html-to-image";
 import { formatCpsAnnouncement } from "../utils/cpsFormatter";
 
@@ -225,12 +225,42 @@ const CPS: React.FC = () => {
               </p>
             </div>
           </div>
-          <button
-            onClick={() => navigate("/")}
-            className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
-          >
-            ← Back to Standard
-          </button>
+          
+          <div className="flex items-center gap-3">
+            {/* GitHub Star Button */}
+            <a
+              href="https://github.com/maruf-pfc/cp-snapshot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-700 bg-zinc-800/50 hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-200 cursor-pointer"
+            >
+              <Star className="w-4 h-4 text-yellow-400 group-hover:fill-yellow-400 transition-colors" />
+              <span className="text-xs font-medium text-zinc-300 group-hover:text-zinc-100 hidden sm:inline">
+                Star on GitHub
+              </span>
+              <svg
+                className="w-3 h-3 text-zinc-500 group-hover:text-zinc-300 transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </a>
+
+            {/* Back to Standard */}
+            <button
+              onClick={() => navigate("/")}
+              className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+            >
+              ← Standard
+            </button>
+          </div>
         </div>
       </header>
 

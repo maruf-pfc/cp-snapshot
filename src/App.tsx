@@ -3,7 +3,7 @@ import ContestForm from "./components/ContestForm";
 import ThemeSelector from "./components/ThemeSelector";
 import SnapshotCard from "./components/SnapshotCard";
 import ActionButtons from "./components/ActionButtons";
-import { Trophy, Sparkles } from "lucide-react";
+import { Trophy, Star } from "lucide-react";
 
 function App() {
   return (
@@ -24,10 +24,32 @@ function App() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-xs text-zinc-500">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="hidden sm:inline">v1.0</span>
-          </div>
+
+          {/* GitHub Star Button */}
+          <a
+            href="https://github.com/maruf-pfc/cp-snapshot"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-700 bg-zinc-800/50 hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-200 cursor-pointer"
+          >
+            <Star className="w-4 h-4 text-yellow-400 group-hover:fill-yellow-400 transition-colors" />
+            <span className="text-xs font-medium text-zinc-300 group-hover:text-zinc-100">
+              Star on GitHub
+            </span>
+            <svg
+              className="w-3 h-3 text-zinc-500 group-hover:text-zinc-300 transition-colors"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+          </a>
         </div>
       </header>
 

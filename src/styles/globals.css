@@ -17,10 +17,17 @@
     @apply bg-zinc-950 text-zinc-100 font-sans antialiased;
   }
 
-  button, a, label, [role="button"], input[type="submit"], input[type="button"] {
+  button,
+  a,
+  label,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"] {
     cursor: pointer;
   }
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     cursor: text;
   }
 }
@@ -31,20 +38,36 @@
            text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 
            focus:ring-blue-500/30 focus:border-blue-500 transition-all duration-200;
   }
-  
+
   .btn-primary {
     @apply px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl 
            transition-all duration-200 active:scale-[0.98] active:translate-y-px 
            disabled:opacity-50 disabled:pointer-events-none;
   }
-  
+
   .btn-secondary {
     @apply px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl 
            border border-zinc-700 transition-all duration-200 active:scale-[0.98] active:translate-y-px
            disabled:opacity-50 disabled:pointer-events-none;
   }
-  
+
   .card-base {
     @apply rounded-2xl border border-zinc-800 bg-zinc-900/50 shadow-xl shadow-black/10;
+  }
+}
+
+/* GitHub star hover glow */
+@layer components {
+  .github-star-btn {
+    @apply relative overflow-hidden;
+  }
+  .github-star-btn::before {
+    content: "";
+    @apply absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(250, 204, 21, 0.15) 0%,
+      transparent 70%
+    );
   }
 }
