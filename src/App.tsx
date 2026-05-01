@@ -8,7 +8,7 @@ import { Trophy, Sparkles } from "lucide-react";
 function App() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      {/* Header */}
+      {/* Header - NO link to /cps */}
       <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-xl sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -31,28 +31,26 @@ function App() {
         </div>
       </header>
 
-      {/* Main */}
+      {/* Main Content - Same as before */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel */}
-          <div className="space-y-6 order-2 lg:order-1">
-            <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-5 space-y-4">
+          <div className="space-y-6">
+            <section className="card-base p-5 space-y-4">
               <h2 className="text-base font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-blue-500 rounded-full" />
                 Platforms
               </h2>
               <PlatformSelector />
             </section>
-
-            <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-5 space-y-4">
+            <section className="card-base p-5 space-y-4">
               <h2 className="text-base font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-blue-500 rounded-full" />
                 Contest Details
               </h2>
               <ContestForm />
             </section>
-
-            <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-5 space-y-4">
+            <section className="card-base p-5 space-y-4">
               <h2 className="text-base font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-blue-500 rounded-full" />
                 Theme
@@ -61,24 +59,17 @@ function App() {
             </section>
           </div>
 
-          {/* Right Panel - Preview */}
-          <div className="space-y-6 order-1 lg:order-2">
+          {/* Right Panel */}
+          <div className="space-y-6">
             <h2 className="text-base font-semibold flex items-center gap-2">
               <span className="w-1.5 h-5 bg-blue-500 rounded-full" />
               Preview
             </h2>
-
-            {/* Scrollable container for mobile */}
-            <div className="card-base p-4 sm:p-6 flex justify-center items-center overflow-hidden snap-x snap-mandatory">
-              <div
-                data-snapshot-card
-                className="snap-center w-full max-w-130"
-              >
+            <div className="card-base p-4 sm:p-6 flex justify-center items-center overflow-hidden">
+              <div data-snapshot-card className="w-full max-w-130">
                 <SnapshotCard />
               </div>
             </div>
-
-            {/* Action Buttons */}
             <ActionButtons />
           </div>
         </div>

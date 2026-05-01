@@ -12,6 +12,13 @@ export interface ContestState {
   duration: number;
   selectedPlatforms: Platform[];
   activeTheme: string;
+
+  // CPS-specific fields
+  mode: "standard" | "cps";
+  contestNo?: string;
+  moduleNo?: string;
+  cpsStartDate?: string;
+  cpsEndDate?: string;
 }
 
 export interface ContestActions {
@@ -22,6 +29,12 @@ export interface ContestActions {
   selectPlatform: (platform: Platform) => void;
   setActiveTheme: (theme: string) => void;
   reset: () => void;
+
+  // CPS actions
+  setMode: (mode: "standard" | "cps") => void;
+  setContestNo: (no: string) => void;
+  setModuleNo: (no: string) => void;
+  setCpsStartDate: (date: string) => void;
 }
 
 export type ThemeConfig = {

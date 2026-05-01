@@ -37,4 +37,12 @@ export const platforms: readonly Platform[] = [
     color: "#10B981",
     logo: "/logos/geeksforgeeks.png",
   },
+
+  // Added Vjudge for CPS
+  {
+    id: "vjudge",
+    name: "Vjudge",
+    color: "#F1FD00",
+    logo: "/logos/vjudge.jpeg",
+  },
 ] as const;
