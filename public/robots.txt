@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maruf-pfc.github.io/cp-snapshot/sitemap.xml
