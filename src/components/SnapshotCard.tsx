@@ -28,34 +28,26 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
     } = store;
 
     const theme = themes[themeKey || activeTheme] || themes.midnight;
-    const isCps = mode === "cps";
+    const isCpc = mode === "cps-cpc";
+    const isAnyCps = mode.startsWith("cps");
 
-    // Live time left for standard mode
-    const liveTimeLeft = useLiveTimeLeft(isCps ? "" : startDateTime);
+    // Live time left for standard/weekly mode
+    const liveTimeLeft = useLiveTimeLeft(isCpc ? "" : startDateTime);
 
     // Format helpers
     const formatCpsDate = (dateStr: string | undefined) => {
       if (!dateStr) return "TBD";
       const d = new Date(`${dateStr}T19:00:00`);
-      return d
-        .toLocaleString("en-GB", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        })
-        .replace(",", "");
+      return format(d, "d MMM yyyy • h:mm aa");
     };
 
     // Standard mode values
     const startTimeStr = startDateTime
-      ? format(new Date(startDateTime), "MMM d, yyyy • HH:mm")
+      ? format(new Date(startDateTime), "MMM d, yyyy • h:mm aa")
       : "Not specified";
     const durationStr = formatDuration(duration);
 
-    // CPS mode values
+    // CPS mode values (for CPC)
     const cpsStartFormatted = formatCpsDate(cpsStartDate);
     const cpsEndFormatted = formatCpsDate(cpsEndDate);
 
@@ -110,21 +102,26 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
             <div className="min-w-0 flex-1">
               {/* CPS Mode: Two-line title */}
-              {isCps ? (
+              {isAnyCps ? (
                 <div className="space-y-0.5">
                   {/* Line 1: Module/Contest identifiers */}
                   <div
                     className="text-xs font-mono uppercase tracking-wider"
                     style={{ color: theme.accent }}
                   >
-                    {[
-                      moduleNo ? `Module-${moduleNo}` : "",
-                      contestNo ? `Contest-${contestNo}` : "",
-                    ]
-                      .filter(Boolean)
-                      .join(" | ")}
-                    {/* Add trailing pipe if we have identifiers but also a name */}
-                    {(moduleNo || contestNo) && contestName ? " |" : ""}
+                    {isCpc ? (
+                      <>
+                        {[
+                          moduleNo ? `Module-${moduleNo}` : "",
+                          contestNo ? `Contest-${contestNo}` : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" | ")}
+                        {(moduleNo || contestNo) && contestName ? " |" : ""}
+                      </>
+                    ) : (
+                      "Weekly Contest"
+                    )}
                   </div>
                   {/* Line 2: Contest name */}
                   <h1
@@ -180,13 +177,13 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
                 color: theme.textSec,
               }}
             >
-              {isCps ? "10 Days" : "Live"}
+              {isCpc ? "10 Days" : "Live"}
             </div>
           </div>
 
           {/* Info Grid */}
           <div className="space-y-3">
-            {isCps ? (
+            {isCpc ? (
               // CPS mode: Start + End dates
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div
@@ -285,13 +282,13 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
                 className="text-[10px] font-medium uppercase tracking-widest mb-1"
                 style={{ color: theme.textSec }}
               >
-                {isCps ? "Duration" : "Duration"}
+                {isAnyCps ? "Duration" : "Duration"}
               </div>
               <div
                 className="text-sm font-medium"
                 style={{ color: theme.text }}
               >
-                {isCps ? "10 days" : durationStr}
+                {isCpc ? "10 days" : durationStr}
               </div>
             </div>
           </div>
@@ -316,14 +313,14 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
                 className="text-[10px] font-medium uppercase tracking-wider"
                 style={{ color: theme.textSec }}
               >
-                {isCps ? "CPS Academy" : "Ready to compete"}
+                {isAnyCps ? "CPS Academy" : "Ready to compete"}
               </span>
             </div>
             <span
               className="text-[10px] font-mono text-left sm:text-right"
               style={{ color: theme.textSec }}
             >
-              {isCps ? "cpsacademy.io" : "cp-snapshot.vercel.app"}
+              {isAnyCps ? "cpsacademy.io" : "cp-snapshot.vercel.app"}
             </span>
           </div>
         </div>

@@ -72,13 +72,7 @@ function App() {
               </h2>
               <ContestForm />
             </section>
-            <section className="card-base p-5 space-y-4">
-              <h2 className="text-base font-semibold flex items-center gap-2">
-                <span className="w-1.5 h-5 bg-blue-500 rounded-full" />
-                Theme
-              </h2>
-              <ThemeSelector />
-            </section>
+            
           </div>
 
           {/* Right Panel */}
@@ -93,6 +87,13 @@ function App() {
               </div>
             </div>
             <ActionButtons />
+            <section className="card-base p-5 space-y-4">
+              <h2 className="text-base font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-blue-500 rounded-full" />
+                Theme
+              </h2>
+              <ThemeSelector />
+            </section>
           </div>
         </div>
       </main>

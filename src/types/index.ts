@@ -14,11 +14,18 @@ export interface ContestState {
   activeTheme: string;
 
   // CPS-specific fields
-  mode: "standard" | "cps";
+  mode: "standard" | "cps-cpc" | "cps-weekly";
   contestNo?: string;
   moduleNo?: string;
   cpsStartDate?: string;
   cpsEndDate?: string;
+
+  // Weekly contest fields
+  weeklyContestNo: string;
+  weeklyDate: string;
+  weeklyTime: "7:00 PM" | "7:30 PM";
+  juniorLink: string;
+  seniorLink: string;
 }
 
 export interface ContestActions {
@@ -31,10 +38,17 @@ export interface ContestActions {
   reset: () => void;
 
   // CPS actions
-  setMode: (mode: "standard" | "cps") => void;
+  setMode: (mode: "standard" | "cps-cpc" | "cps-weekly") => void;
   setContestNo: (no: string) => void;
   setModuleNo: (no: string) => void;
   setCpsStartDate: (date: string) => void;
+
+  // Weekly actions
+  setWeeklyContestNo: (no: string) => void;
+  setWeeklyDate: (date: string) => void;
+  setWeeklyTime: (time: "7:00 PM" | "7:30 PM") => void;
+  setJuniorLink: (link: string) => void;
+  setSeniorLink: (link: string) => void;
 }
 
 export type ThemeConfig = {

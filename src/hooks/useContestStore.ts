@@ -19,6 +19,13 @@ export const useContestStore = create<ContestStore>()((set) => ({
   cpsStartDate: "",
   cpsEndDate: "",
 
+  // Weekly fields
+  weeklyContestNo: "",
+  weeklyDate: "",
+  weeklyTime: "7:00 PM",
+  juniorLink: "",
+  seniorLink: "",
+
   // Standard actions
   setContestName: (name) => set({ contestName: name }),
   setStartDateTime: (dateTime) => set({ startDateTime: dateTime }),
@@ -34,7 +41,7 @@ export const useContestStore = create<ContestStore>()((set) => ({
   setActiveTheme: (theme) => set({ activeTheme: theme }),
 
   // CPS actions
-  setMode: (mode) => set({ mode }),
+  setMode: (mode: "standard" | "cps-cpc" | "cps-weekly") => set({ mode }),
   setContestNo: (no) => set({ contestNo: no }),
   setModuleNo: (no) => set({ moduleNo: no }),
   setCpsStartDate: (date) =>
@@ -54,6 +61,13 @@ export const useContestStore = create<ContestStore>()((set) => ({
       };
     }),
 
+  // Weekly setters
+  setWeeklyContestNo: (no) => set({ weeklyContestNo: no }),
+  setWeeklyDate: (date) => set({ weeklyDate: date }),
+  setWeeklyTime: (time) => set({ weeklyTime: time }),
+  setJuniorLink: (link) => set({ juniorLink: link }),
+  setSeniorLink: (link) => set({ seniorLink: link }),
+
   reset: () =>
     set({
       contestName: "",
@@ -67,5 +81,10 @@ export const useContestStore = create<ContestStore>()((set) => ({
       moduleNo: "",
       cpsStartDate: "",
       cpsEndDate: "",
+      weeklyContestNo: "",
+      weeklyDate: "",
+      weeklyTime: "7:00 PM",
+      juniorLink: "",
+      seniorLink: "",
     }),
 }));

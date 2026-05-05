@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "./App";
 import CPS from "./pages/CPS";
-import UmamiAnalytics from "./components/UmamiAnalytics"; // ← Import
+import CPSWeekly from "./pages/CPSWeekly";
+import UmamiAnalytics from "./components/UmamiAnalytics";
 import "./styles/globals.css";
 import UmamiRouteTracker from "./components/UmamiRouteTracker";
 
@@ -18,7 +19,12 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="*" element={<UmamiRouteTracker />} />
         <Route path="/" element={<App />} />
-        <Route path="/cps" element={<CPS />} />
+
+        {/* /cps → redirect to /cps/cpc */}
+        <Route path="/cps" element={<Navigate to="/cps/cpc" replace />} />
+        <Route path="/cps/cpc" element={<CPS />} />
+        <Route path="/cps/weekly" element={<CPSWeekly />} />
+
         <Route
           path="*"
           element={

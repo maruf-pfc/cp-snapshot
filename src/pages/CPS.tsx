@@ -1,13 +1,13 @@
-// src/pages/CpsPage.tsx
+// src/pages/CPS.tsx  (now mounted at /cps/cpc)
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useContestStore } from "../hooks/useContestStore";
 import { platforms } from "../utils/platforms";
 import ThemeSelector from "../components/ThemeSelector";
 import SnapshotCard from "../components/SnapshotCard";
-import { Copy, Download, Check, Loader2, Star } from "lucide-react";
+import { Copy, Download, Check, Loader2 } from "lucide-react";
 import { toPng } from "html-to-image";
 import { formatCpsAnnouncement } from "../utils/cpsFormatter";
+import { CpsNav } from "./CPSWeekly";
 
 const CpsForm: React.FC = () => {
   const {
@@ -110,9 +110,7 @@ const CpsForm: React.FC = () => {
 };
 
 const CpsActionButtons: React.FC = () => {
-  const [state, setState] = React.useState<"idle" | "loading" | "success">(
-    "idle",
-  );
+  const [state, setState] = React.useState<"idle" | "loading" | "success">("idle");
   const contest = useContestStore();
 
   const generateImage = async (): Promise<string | null> => {
@@ -196,14 +194,11 @@ const CpsActionButtons: React.FC = () => {
 
 const CPS: React.FC = () => {
   const { mode, selectPlatform, setActiveTheme } = useContestStore();
-  const navigate = useNavigate();
   const vjudge = platforms.find((p) => p.id === "vjudge");
 
-  // Initialize CPS defaults on mount
   useEffect(() => {
-    if (mode !== "cps") {
-      // Set CPS mode + auto-select Vjudge
-      useContestStore.getState().setMode("cps");
+    if (mode !== "cps-cpc") {
+      useContestStore.getState().setMode("cps-cpc");
       if (vjudge) selectPlatform(vjudge);
       setActiveTheme("midnight");
     }
@@ -211,60 +206,8 @@ const CPS: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      {/* Header */}
-      <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-xl sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-600/10 rounded-xl border border-emerald-600/20">
-              <span className="text-emerald-500 font-bold text-sm">CPS</span>
-            </div>
-            <div>
-              <h1 className="text-lg font-bold">CPS Snapshot</h1>
-              <p className="text-xs text-zinc-500">
-                Academy contest announcements
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            {/* GitHub Star Button */}
-            <a
-              href="https://github.com/maruf-pfc/cp-snapshot"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-700 bg-zinc-800/50 hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-200 cursor-pointer"
-            >
-              <Star className="w-4 h-4 text-yellow-400 group-hover:fill-yellow-400 transition-colors" />
-              <span className="text-xs font-medium text-zinc-300 group-hover:text-zinc-100 hidden sm:inline">
-                Star on GitHub
-              </span>
-              <svg
-                className="w-3 h-3 text-zinc-500 group-hover:text-zinc-300 transition-colors"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-            </a>
+      <CpsNav />
 
-            {/* Back to Standard */}
-            <button
-              onClick={() => navigate("/")}
-              className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
-            >
-              ← Standard
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Panel */}
@@ -274,9 +217,7 @@ const CPS: React.FC = () => {
                 <span className="w-1.5 h-5 bg-emerald-500 rounded-full" />
                 Platform
               </h2>
-              <p className="text-sm text-zinc-400">
-                Vjudge selected by default
-              </p>
+              <p className="text-sm text-zinc-400">Vjudge selected by default</p>
               <div className="p-3 rounded-xl bg-zinc-800/50 border border-zinc-700 flex items-center gap-3">
                 <img
                   src={vjudge?.logo}
@@ -284,9 +225,7 @@ const CPS: React.FC = () => {
                   className="w-6 h-6 object-contain"
                 />
                 <span className="font-medium">Vjudge</span>
-                <span className="ml-auto text-xs text-emerald-400">
-                  ✓ Selected
-                </span>
+                <span className="ml-auto text-xs text-emerald-400">✓ Selected</span>
               </div>
             </section>
 
@@ -296,14 +235,6 @@ const CPS: React.FC = () => {
                 Contest Details
               </h2>
               <CpsForm />
-            </section>
-
-            <section className="card-base p-5 space-y-4">
-              <h2 className="text-base font-semibold flex items-center gap-2">
-                <span className="w-1.5 h-5 bg-emerald-500 rounded-full" />
-                Theme
-              </h2>
-              <ThemeSelector />
             </section>
           </div>
 
@@ -319,11 +250,17 @@ const CPS: React.FC = () => {
               </div>
             </div>
             <CpsActionButtons />
+            <section className="card-base p-5 space-y-4">
+              <h2 className="text-base font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-emerald-500 rounded-full" />
+                Theme
+              </h2>
+              <ThemeSelector />
+            </section>
           </div>
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-zinc-800 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-xs text-zinc-600">
           CPS Academy • Private tool for contest announcements
