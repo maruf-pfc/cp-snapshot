@@ -1,13 +1,14 @@
 // src/pages/CPS.tsx  (now mounted at /cps/cpc)
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useContestStore } from "../hooks/useContestStore";
 import { platforms } from "../utils/platforms";
 import ThemeSelector from "../components/ThemeSelector";
 import SnapshotCard from "../components/SnapshotCard";
-import { Copy, Download, Check, Loader2 } from "lucide-react";
+import { Copy, Download, Check, Loader2, Clock, AlertCircle } from "lucide-react";
 import { toPng } from "html-to-image";
 import { formatCpsAnnouncement } from "../utils/cpsFormatter";
 import { CpsNav } from "./CPSWeekly";
+import { AnnouncementModal } from "../components/AnnouncementModals";
 
 const CpsForm: React.FC = () => {
   const {
@@ -109,8 +110,13 @@ const CpsForm: React.FC = () => {
   );
 };
 
-const CpsActionButtons: React.FC = () => {
+interface CpsActionButtonsProps {
+  onOpenModal: (type: "missed" | "daysLeft") => void;
+}
+
+const CpsActionButtons: React.FC<CpsActionButtonsProps> = ({ onOpenModal }) => {
   const [state, setState] = React.useState<"idle" | "loading" | "success">("idle");
+  const [announcementState, setAnnouncementState] = React.useState<"idle" | "success">("idle");
   const contest = useContestStore();
 
   const generateImage = async (): Promise<string | null> => {
@@ -156,38 +162,63 @@ const CpsActionButtons: React.FC = () => {
 
   const handleCopyAnnouncement = () => {
     navigator.clipboard.writeText(formatCpsAnnouncement(contest));
+    setAnnouncementState("success");
+    setTimeout(() => setAnnouncementState("idle"), 1500);
   };
 
   return (
-    <div className="flex flex-wrap gap-3">
-      <button
-        onClick={handleCopy}
-        disabled={state !== "idle"}
-        className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center disabled:opacity-60 cursor-pointer"
-      >
-        {state === "loading" ? (
-          <Loader2 className="w-4 h-4 animate-spin" />
-        ) : state === "success" ? (
-          <Check className="w-4 h-4" />
-        ) : (
-          <Copy className="w-4 h-4" />
-        )}
-        {state === "success" ? "Copied!" : "Copy Image"}
-      </button>
-      <button
-        onClick={handleDownload}
-        className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl border border-zinc-700 transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center cursor-pointer"
-      >
-        <Download className="w-4 h-4" />
-        Download PNG
-      </button>
-      <button
-        onClick={handleCopyAnnouncement}
-        className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center cursor-pointer"
-      >
-        <Copy className="w-4 h-4" />
-        Copy Announcement
-      </button>
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-wrap gap-3">
+        <button
+          onClick={handleCopy}
+          disabled={state !== "idle"}
+          className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center disabled:opacity-60 cursor-pointer"
+        >
+          {state === "loading" ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : state === "success" ? (
+            <Check className="w-4 h-4" />
+          ) : (
+            <Copy className="w-4 h-4" />
+          )}
+          {state === "success" ? "Copied!" : "Copy Image"}
+        </button>
+        <button
+          onClick={handleDownload}
+          className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl border border-zinc-700 transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center cursor-pointer"
+        >
+          <Download className="w-4 h-4" />
+          Download PNG
+        </button>
+        <button
+          onClick={handleCopyAnnouncement}
+          className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center cursor-pointer"
+        >
+          {announcementState === "success" ? (
+            <Check className="w-4 h-4" />
+          ) : (
+            <Copy className="w-4 h-4" />
+          )}
+          {announcementState === "success" ? "Copied!" : "Copy Announcement"}
+        </button>
+      </div>
+
+      <div className="flex flex-wrap gap-3 border-t border-zinc-800/80 pt-3 mt-1">
+        <button
+          onClick={() => onOpenModal("missed")}
+          className="px-4 py-2 bg-orange-600/20 hover:bg-orange-600/30 text-orange-400 border border-orange-500/30 hover:border-orange-500/50 font-medium rounded-xl transition-all active:scale-[0.98] flex items-center gap-2 cursor-pointer text-xs"
+        >
+          <AlertCircle className="w-3.5 h-3.5" />
+          Missed Contest Announcement
+        </button>
+        <button
+          onClick={() => onOpenModal("daysLeft")}
+          className="px-4 py-2 bg-amber-600/20 hover:bg-amber-600/30 text-amber-400 border border-amber-500/30 hover:border-amber-500/50 font-medium rounded-xl transition-all active:scale-[0.98] flex items-center gap-2 cursor-pointer text-xs"
+        >
+          <Clock className="w-3.5 h-3.5" />
+          Days Left Announcement
+        </button>
+      </div>
     </div>
   );
 };
@@ -195,6 +226,7 @@ const CpsActionButtons: React.FC = () => {
 const CPS: React.FC = () => {
   const { mode, selectPlatform, setActiveTheme } = useContestStore();
   const vjudge = platforms.find((p) => p.id === "vjudge");
+  const [modalType, setModalType] = useState<"missed" | "daysLeft" | null>(null);
 
   useEffect(() => {
     if (mode !== "cps-cpc") {
@@ -249,7 +281,7 @@ const CPS: React.FC = () => {
                 <SnapshotCard />
               </div>
             </div>
-            <CpsActionButtons />
+            <CpsActionButtons onOpenModal={setModalType} />
             <section className="card-base p-5 space-y-4">
               <h2 className="text-base font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-emerald-500 rounded-full" />
@@ -266,6 +298,12 @@ const CPS: React.FC = () => {
           CPS Academy • Private tool for contest announcements
         </div>
       </footer>
+
+      <AnnouncementModal
+        isOpen={modalType !== null}
+        onClose={() => setModalType(null)}
+        type={modalType || "missed"}
+      />
     </div>
   );
 };

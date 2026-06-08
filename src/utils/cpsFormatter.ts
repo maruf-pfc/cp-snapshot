@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import type { ContestState } from "../types";
 
 export const formatCpsAnnouncement = (contest: ContestState): string => {
@@ -10,35 +11,32 @@ export const formatCpsAnnouncement = (contest: ContestState): string => {
     cpsEndDate,
   } = contest;
 
-  // Format dates: "1 May 2026, 07:00 PM"
+  // Format dates: "16 May 2026 07:00 pm"
   const formatDate = (dateStr: string | undefined) => {
     if (!dateStr) return "TBD";
     const d = new Date(`${dateStr}T19:00:00`);
-    return d
-      .toLocaleString("en-GB", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      })
-      .replace(",", "");
+    const dateFormatted = format(d, "d MMM yyyy hh:mm");
+    const ampm = format(d, "a").toLowerCase();
+    return `${dateFormatted} ${ampm}`;
   };
+
+  const startDayMonth = cpsStartDate
+    ? format(new Date(`${cpsStartDate}T19:00:00`), "d MMMM")
+    : "TBD";
 
   const startFormatted = formatDate(cpsStartDate);
   const endFormatted = formatDate(cpsEndDate);
+
   const moduleLabel = moduleNo ? `Module-${moduleNo}` : "";
   const contestLabel = contestNo ? `Contest-${contestNo}` : "";
-  const title = [moduleLabel, contestLabel, contestName]
-    .filter(Boolean)
-    .join(" | ");
+  const prefix = [moduleLabel, contestLabel].filter(Boolean).join(" | ");
+  const fullTitle = prefix ? `${prefix}: ${contestName}` : contestName;
 
   return `@everyone CPS Academy Learners ✨
 
-Your very first practice contest on Data types, Variables, Operators is going to start today.
+Practice contest on **${contestName || "TBD"}** is going to start on ${startDayMonth}.
 
-Get ready for ${title}: Data types, Variables, Operators— an exciting opportunity to test your understanding and sharpen your problem-solving skills. 
+Get ready for **${fullTitle || "TBD"}**, an exciting opportunity to test your understanding and sharpen your problem-solving skills. 
 
 🔗 Contest Link: ${contestLink || "TBD"}
 🗓️ Starts: ${startFormatted}
@@ -49,3 +47,4 @@ Whether you're just starting or brushing up on the basics, this is the perfect c
 Be ready - the contest begins soon!
 Best of luck, everyone.`;
 };
+
