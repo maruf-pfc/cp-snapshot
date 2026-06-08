@@ -65,6 +65,8 @@ export const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
   // Generate template text
   const getAnnouncementText = () => {
     const endDateTimeStr = getFormattedEndDateTime();
+    // Only use contestLink if it's actually a URL
+    const safeLink = contestLink?.startsWith("http") ? contestLink : "TBD";
     if (type === "missed") {
       return `@everyone CPS Academy Learners ✨
 
@@ -72,7 +74,7 @@ The ${titlePart || "TBD"} practice contest has already started.
 
 If anyone missed the previous announcement, no worries — you still have plenty of time to participate and practice.
 
-🔗 Contest Link: ${contestLink || "TBD"}
+🔗 Contest Link: ${safeLink}
 ⏳ Contest Ends: ${endDateTimeStr}
 
 Make sure to solve as many problems as possible and strengthen your understanding of ${contestName || "TBD"} before the deadline.
@@ -85,7 +87,7 @@ Only ${daysLeft} ${daysLeft === 1 ? "day" : "days"} left before the **${titlePar
 
 If you still haven’t participated or solved enough problems yet, this is your final chance to practice and improve your understanding of the ${contestName || "TBD"}.
 
-🔗 Contest Link: ${contestLink || "TBD"}
+🔗 Contest Link: ${safeLink}
 ⏳ Ends: ${endDateTimeStr}
 
 Try to solve as many problems as possible before the deadline. Consistent practice is the key to improvement in competitive programming.

@@ -230,9 +230,13 @@ const CPS: React.FC = () => {
 
   useEffect(() => {
     if (mode !== "cps-cpc") {
-      useContestStore.getState().setMode("cps-cpc");
+      const s = useContestStore.getState();
+      s.setMode("cps-cpc");
       if (vjudge) selectPlatform(vjudge);
       setActiveTheme("midnight");
+      // Reset shared fields so standard-mode leftovers don't bleed in
+      s.setContestLink("");
+      s.setContestName("");
     }
   }, [mode, selectPlatform, setActiveTheme, vjudge]);
 

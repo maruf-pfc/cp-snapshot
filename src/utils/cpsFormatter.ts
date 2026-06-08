@@ -27,6 +27,9 @@ export const formatCpsAnnouncement = (contest: ContestState): string => {
   const startFormatted = formatDate(cpsStartDate);
   const endFormatted = formatDate(cpsEndDate);
 
+  // Sanitize: only use contestLink if it actually looks like a URL
+  const safeLink = contestLink?.startsWith("http") ? contestLink : "TBD";
+
   const moduleLabel = moduleNo ? `Module-${moduleNo}` : "";
   const contestLabel = contestNo ? `Contest-${contestNo}` : "";
   const prefix = [moduleLabel, contestLabel].filter(Boolean).join(" | ");
@@ -38,7 +41,7 @@ Practice contest on **${contestName || "TBD"}** is going to start on ${startDayM
 
 Get ready for **${fullTitle || "TBD"}**, an exciting opportunity to test your understanding and sharpen your problem-solving skills. 
 
-🔗 Contest Link: ${contestLink || "TBD"}
+🔗 Contest Link: ${safeLink}
 🗓️ Starts: ${startFormatted}
 ⏳ Ends: ${endFormatted}
 
