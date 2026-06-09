@@ -2,7 +2,7 @@
 
 All notable changes to CP Snapshot will be documented here.
 
-## [1.0.0] - 29 April 2026
+## [1.0.2] - 9 June 2026
 
 ### ✨ Added
 

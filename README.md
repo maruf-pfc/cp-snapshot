@@ -1,18 +1,35 @@
 # 🏆 CP Snapshot
 
-> Generate beautiful, shareable contest snapshots for competitive programming platforms — 100% client-side.
+> Generate beautiful, shareable contest announcement cards for competitive programming — 100% client-side, no signup required.
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-cp--snapshot.vercel.app-black?style=for-the-badge&logo=vercel)](https://cp-snapshot.vercel.app)
+[![GitHub Stars](https://img.shields.io/github/stars/maruf-pfc/cp-snapshot?style=for-the-badge&logo=github)](https://github.com/maruf-pfc/cp-snapshot/stargazers)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 
 ![CP Snapshot Preview](./public/demo.webp)
 
+---
+
 ## ✨ Features
 
+### Standard Contest Mode
 - 🎨 **9 Professional Themes**: Midnight, Dawn, Aurora, Forest, Sunset, Nord, Cyber, Dracula, Mono
+- 🎯 **Platform Badges**: Codeforces, LeetCode, CodeChef, AtCoder, Coding Ninjas, GeeksForGeeks, Vjudge
 - 📱 **Fully Responsive**: Mobile-first design that works on any device
 - 🖼️ **Export Options**: Copy PNG to clipboard, download locally, or copy formatted text
 - ⚡ **Live Countdown**: Auto-calculating "Time Left" that updates every second
-- 🔗 **Contest Link Support**: Include registration links in copied text (hidden from card)
-- 🎯 **Platform Badges**: Codeforces, LeetCode, CodeChef, AtCoder, Coding Ninjas, GeeksForGeeks
+- 🔗 **Contest Link Support**: Include registration links in copied text
 - 🔒 **Privacy First**: No backend, no tracking, no data leaves your browser
+
+### CPS Academy Mode (`/cps`)
+- 📢 **CPC Contest Announcements**: Auto-formats Discord-ready `@everyone` messages for practice contests
+- 📅 **Auto End-Date**: Set start date — end date calculates automatically (+10 days)
+- 📣 **Missed Contest Generator**: One-click modal to generate announcements for learners who missed the start
+- ⏳ **Days Left Generator**: 1/2/3-day reminder announcements with a form modal
+- 📆 **Weekly Contest Announcements**: Separate page for Junior & Senior weekly contest Discord posts
+
+---
 
 ## 🚀 Quick Start
 
@@ -49,220 +66,233 @@ bun run build
 bun run preview
 ```
 
+---
+
+## 🗺️ Routes
+
+| Route | Description |
+|---|---|
+| `/` | Standard contest card generator (Codeforces, LeetCode, etc.) |
+| `/cps` | Redirects to `/cps/cpc` |
+| `/cps/cpc` | CPS Academy — CPC practice contest announcements |
+| `/cps/weekly` | CPS Academy — Weekly Junior & Senior contest announcements |
+
+---
+
 ## 🎨 Usage Guide
 
-### 1. Select Platforms
+### Standard Mode (`/`)
 
-Click platforms to include in your snapshot. Selected platforms appear as badges on the card.
+1. **Select Platforms** — Click to add platform badges to the card
+2. **Enter Contest Details** — Name, start time, link, duration
+3. **Choose a Theme** — 9 curated themes, live preview
+4. **Export**
 
-### 2. Enter Contest Details
+| Button | Action |
+|---|---|
+| 📋 Copy Image | Copies PNG to clipboard (Discord, Twitter, etc.) |
+| ⬇️ Download PNG | Saves high-res PNG to your device |
+| 📤 Copy Info | Copies formatted text with all contest details |
 
-- **Contest Name**: e.g., "Codeforces Round 923 (Div. 2)"
-- **Starts In**: Date/time when contest begins
-- **Contest Link**: Optional registration/contest URL (included in copied text only)
-- **Duration**: Hours + minutes of contest length
+### CPS Mode (`/cps/cpc`)
 
-> 💡 **Time Left** auto-calculates from "Starts In" and updates live.
+1. Fill in **Contest Name**, **Module No**, **Contest No**, **Contest Link**, **Start Date**
+2. End Date auto-fills (Start + 10 days)
+3. Preview card updates live
+4. Use the action buttons:
 
-### 3. Choose a Theme
+| Button | Description |
+|---|---|
+| Copy Image | Copy snapshot PNG to clipboard |
+| Download PNG | Save snapshot to device |
+| Copy Announcement | Copy the main Discord `@everyone` announcement |
+| Missed Contest Announcement | Opens modal → generates "contest already started" post |
+| Days Left Announcement | Opens modal → generates "X days left" reminder post |
 
-Switch between 9 curated themes. Preview updates instantly.
+### CPS Weekly Mode (`/cps/weekly`)
 
-### 4. Export Your Snapshot
+Fill in contest number, date, time, and Junior/Senior links. The page generates a combined Discord announcement for both divisions.
 
-| Button          | Action                                                    |
-| --------------- | --------------------------------------------------------- |
-| 📋 Copy Image   | Copies PNG to clipboard (paste in Discord, Twitter, etc.) |
-| ⬇️ Download PNG | Saves high-res PNG to your device                         |
-| 📤 Copy Info    | Copies formatted text with all contest details + link     |
+---
 
 ## 🛠️ Tech Stack
 
-| Category     | Technology                                |
-| ------------ | ----------------------------------------- |
-| Framework    | React 19 + Vite                           |
-| Language     | TypeScript                                |
-| Styling      | TailwindCSS v4 (with `@tailwindcss/vite`) |
-| State        | Zustand 5                                 |
-| Icons        | Lucide React                              |
-| Image Export | html-to-image                             |
-| Date Utils   | date-fns                                  |
-| Utilities    | clsx                                      |
+| Category | Technology |
+|---|---|
+| Framework | React 19 + Vite 8 |
+| Language | TypeScript 6 |
+| Styling | TailwindCSS v4 (`@tailwindcss/vite`) |
+| State | Zustand 5 |
+| Routing | React Router v7 |
+| Icons | Lucide React |
+| Image Export | html-to-image |
+| Date Utils | date-fns 4 |
+| Analytics | Vercel Analytics |
+
+---
 
 ## 📁 Project Structure
 
 ```
 cp-snapshot/
 ├── public/
-│   └── logos/              # Platform logo images
+│   ├── logos/                  # Platform logo images
+│   ├── demo.webp               # OG preview image
+│   ├── favicon.svg
+│   ├── robots.txt
+│   └── sitemap.xml
 ├── src/
-│   ├── components/         # React components
-│   │   ├── PlatformSelector.tsx
-│   │   ├── ContestForm.tsx
-│   │   ├── SnapshotCard.tsx
-│   │   ├── ThemeSelector.tsx
-│   │   └── ActionButtons.tsx
-│   ├── features/           # Feature modules (future expansion)
-│   ├── hooks/              # Custom React hooks
-│   │   ├── useContestStore.ts
-│   │   └── useLiveTimeLeft.ts
-│   ├── utils/              # Pure utility functions
-│   │   ├── platforms.ts
-│   │   ├── themes.ts
-│   │   └── formatters.ts
-│   ├── types/              # TypeScript type definitions
-│   │   └── index.ts
-│   ├── styles/             # Global styles
-│   │   └── globals.css
-│   ├── App.tsx             # Main app component
-│   └── main.tsx            # Entry point
-├── index.html              # Vite entry HTML
-├── vite.config.ts          # Vite + Tailwind v4 config
-├── tsconfig*.json          # TypeScript configuration
-├── package.json            # Dependencies & scripts
-└── README.md               # This file
+│   ├── components/
+│   │   ├── ActionButtons.tsx       # Standard mode export buttons
+│   │   ├── AnnouncementModals.tsx  # Missed / Days Left modal generators
+│   │   ├── ContestForm.tsx         # Standard contest input form
+│   │   ├── PlatformSelector.tsx    # Platform badge picker
+│   │   ├── SnapshotCard.tsx        # Card preview (all modes)
+│   │   └── ThemeSelector.tsx       # Theme switcher
+│   ├── hooks/
+│   │   ├── useContestStore.ts      # Global Zustand state
+│   │   └── useLiveTimeLeft.ts      # Live countdown hook
+│   ├── pages/
+│   │   ├── CPS.tsx                 # /cps/cpc page
+│   │   └── CPSWeekly.tsx           # /cps/weekly page
+│   ├── utils/
+│   │   ├── cpsFormatter.ts         # CPC announcement formatter
+│   │   ├── formatters.ts           # General formatters
+│   │   ├── platforms.ts            # Platform definitions
+│   │   ├── themes.ts               # Theme definitions
+│   │   └── weeklyFormatter.ts      # Weekly announcement formatter
+│   ├── types/
+│   │   └── index.ts                # TypeScript type definitions
+│   ├── styles/
+│   │   └── globals.css             # Global + Tailwind base styles
+│   ├── App.tsx                     # Standard home page
+│   └── main.tsx                    # Entry point + routing
+├── index.html                      # Vite HTML entry (SEO meta tags)
+├── vercel.json                     # Vercel deployment config
+├── vite.config.ts
+├── tsconfig*.json
+├── package.json
+└── README.md
 ```
+
+---
 
 ## 🎨 Theme Gallery
 
-| Theme        | Preview                     | Best For              |
-| ------------ | --------------------------- | --------------------- |
-| **Midnight** | 🌙 Dark with violet accent  | Default, professional |
-| **Dawn**     | 🌅 Light with indigo accent | Presentations, docs   |
-| **Aurora**   | 🌌 Deep blue with cyan      | Night owls, streamers |
-| **Forest**   | 🌲 Dark green with emerald  | Nature lovers         |
-| **Sunset**   | 🌇 Purple with amber        | Creative contests     |
-| **Nord**     | ❄️ Arctic blue palette      | Minimalist coders     |
-| **Cyber**    | ⚡ Neon cyan on black       | Cyberpunk vibes       |
-| **Dracula**  | 🧛 Pink accent on dark      | Theme enthusiasts     |
-| **Mono**     | ⚫⚪ Strict grayscale       | Print, accessibility  |
+| Theme | Preview | Best For |
+|---|---|---|
+| **Midnight** | 🌙 Dark with violet accent | Default, professional |
+| **Dawn** | 🌅 Light with indigo accent | Presentations, docs |
+| **Aurora** | 🌌 Deep blue with cyan | Night owls, streamers |
+| **Forest** | 🌲 Dark green with emerald | Nature lovers |
+| **Sunset** | 🌇 Purple with amber | Creative contests |
+| **Nord** | ❄️ Arctic blue palette | Minimalist coders |
+| **Cyber** | ⚡ Neon cyan on black | Cyberpunk vibes |
+| **Dracula** | 🧛 Pink accent on dark | Theme enthusiasts |
+| **Mono** | ⚫⚪ Strict grayscale | Print, accessibility |
+
+---
 
 ## 🔧 Development
 
 ### Adding a New Platform
 
-1. Add logo to `public/logos/` (PNG/JPG, ~64x64px)
+1. Add logo to `public/logos/` (PNG/SVG, ~64×64px)
 2. Update `src/utils/platforms.ts`:
    ```typescript
    { id: 'newplatform', name: 'New Platform', color: '#HEX', logo: '/logos/newplatform.png' }
    ```
-3. (Optional) Add platform-specific CSS variable in `globals.css`
 
 ### Adding a New Theme
 
-1. Add entry to `src/utils/themes.ts`:
-   ```typescript
-   mytheme: {
-     name: 'My Theme',
-     bg: '#000000',
-     surface: '#111111',
-     text: '#ffffff',
-     textSec: '#888888',
-     accent: '#00ff00',
-     border: '#333333'
-   }
-   ```
-2. Theme appears automatically in selector
+Update `src/utils/themes.ts`:
+```typescript
+mytheme: {
+  name: 'My Theme',
+  bg: '#000000',
+  surface: '#111111',
+  text: '#ffffff',
+  textSec: '#888888',
+  accent: '#00ff00',
+  border: '#333333'
+}
+```
+Theme appears automatically in the selector.
 
 ### Customizing Export Quality
 
 Edit `src/components/ActionButtons.tsx`:
-
 ```typescript
 toPng(element, {
-  quality: 1.0, // 0.1 to 1.0
-  pixelRatio: 2, // 1x, 2x (retina), 4x (ultra)
+  quality: 1.0,   // 0.1 → 1.0
+  pixelRatio: 2,  // 1x, 2x (retina), 4x (ultra)
   cacheBust: true,
 });
 ```
+
+---
 
 ## 🌐 Deployment
 
 ### Vercel (Recommended)
 
-```bash
-# Install Vercel CLI
-bun add -g vercel
-
-# Deploy
-vercel
-```
-
-### Cloudflare Pages
-
-```bash
-# Build
-bun run build
-
-# Deploy via Wrangler
-wrangler pages deploy dist
-```
+Connect the GitHub repo to Vercel — it auto-detects Vite and deploys on every push. No extra config needed; `vercel.json` is already set up.
 
 ### Netlify
 
 1. Connect repo to Netlify
-2. Set build command: `bun run build`
-3. Set publish directory: `dist/`
+2. Build command: `bun run build`
+3. Publish directory: `dist/`
 4. Deploy 🚀
 
-### GitHub Pages
+### Cloudflare Pages
 
 ```bash
-# In package.json, add:
-{
-  "homepage": "https://yourusername.github.io/cp-snapshot",
-  "scripts": {
-    "predeploy": "bun run build",
-    "deploy": "gh-pages -d dist"
-  }
-}
-
-# Install & deploy
-bun add -D gh-pages
-bun run deploy
+bun run build
+wrangler pages deploy dist
 ```
+
+---
 
 ## 🤝 Contributing
 
-Contributions welcome! Here's how:
+Contributions are welcome!
 
 1. Fork the repo
 2. Create a feature branch: `git checkout -b feat/amazing-feature`
-3. Commit changes: `git commit -m 'feat: add amazing feature'`
+3. Commit: `git commit -m 'feat: add amazing feature'`
 4. Push: `git push origin feat/amazing-feature`
 5. Open a Pull Request
 
-### Development Guidelines
+**Guidelines:** Follow existing code style · Add TypeScript types · Test on mobile + desktop · Keep commits atomic.
 
-- Follow existing code style (Prettier + ESLint)
-- Add TypeScript types for new features
-- Test on mobile + desktop before submitting
-- Keep commits atomic and descriptive
+---
 
 ## 🐛 Reporting Issues
 
-Found a bug? Please include:
-
+Found a bug? Open an [issue](https://github.com/maruf-pfc/cp-snapshot/issues) and include:
 - Browser + OS version
 - Steps to reproduce
-- Expected vs actual behavior
-- Screenshot if visual issue
+- Expected vs actual behaviour
+- Screenshot if visual
 
-[Open an Issue](https://github.com/yourusername/cp-snapshot/issues)
+---
 
 ## 📜 License
 
 MIT License — see [LICENSE](LICENSE) for details.
 
+---
+
 ## 🙏 Acknowledgments
 
 - [Linear](https://linear.app) for design inspiration
-- [Vercel](https://vercel.com) for deployment excellence
+- [Vercel](https://vercel.com) for hosting & analytics
 - [Lucide](https://lucide.dev) for beautiful icons
-- Competitive programming community for the motivation
+- CPS Academy & the competitive programming community
 
 ---
 
-**Built with ❤️ by competitive programmers, for competitive programmers.**
+**Built with ❤️ by [Maruf Sarker](https://www.linkedin.com/in/mdmarufsarker) for competitive programmers.**
 
-[⭐ Star on GitHub](https://github.com/maruf-pfc/cp-snapshot) • [🐦 Follow Updates](https://twitter.com/md_marufsarker)
+[⭐ Star on GitHub](https://github.com/maruf-pfc/cp-snapshot) · [🌐 Live Demo](https://cp-snapshot.vercel.app)
