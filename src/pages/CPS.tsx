@@ -40,7 +40,7 @@ const CpsForm: React.FC = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium mb-2 text-zinc-400">
             Contest No
@@ -80,7 +80,7 @@ const CpsForm: React.FC = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium mb-2 text-zinc-400">
             Start Date
@@ -116,6 +116,7 @@ interface CpsActionButtonsProps {
 
 const CpsActionButtons: React.FC<CpsActionButtonsProps> = ({ onOpenModal }) => {
   const [state, setState] = React.useState<"idle" | "loading" | "success">("idle");
+  const [dlState, setDlState] = React.useState<"idle" | "loading">("idle");
   const [announcementState, setAnnouncementState] = React.useState<"idle" | "success">("idle");
   const contest = useContestStore();
 
@@ -148,6 +149,8 @@ const CpsActionButtons: React.FC<CpsActionButtonsProps> = ({ onOpenModal }) => {
   };
 
   const handleDownload = async () => {
+    if (dlState !== "idle") return;
+    setDlState("loading");
     try {
       const url = await generateImage();
       if (!url) return;
@@ -158,6 +161,7 @@ const CpsActionButtons: React.FC<CpsActionButtonsProps> = ({ onOpenModal }) => {
     } catch {
       console.error("Download failed");
     }
+    setTimeout(() => setDlState("idle"), 800);
   };
 
   const handleCopyAnnouncement = () => {
@@ -185,10 +189,11 @@ const CpsActionButtons: React.FC<CpsActionButtonsProps> = ({ onOpenModal }) => {
         </button>
         <button
           onClick={handleDownload}
-          className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl border border-zinc-700 transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center cursor-pointer"
+          disabled={dlState !== "idle"}
+          className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-xl border border-zinc-700 transition-all active:scale-[0.98] flex items-center gap-2 min-w-32.5 justify-center cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <Download className="w-4 h-4" />
-          Download PNG
+          {dlState === "loading" ? "Saving..." : "Download PNG"}
         </button>
         <button
           onClick={handleCopyAnnouncement}
