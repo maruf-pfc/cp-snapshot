@@ -14,14 +14,27 @@ export const formatCpsAnnouncement = (contest: ContestState): string => {
   // Format dates: "16 May 2026 07:00 pm"
   const formatDate = (dateStr: string | undefined) => {
     if (!dateStr) return "TBD";
-    const d = new Date(`${dateStr}T19:00:00`);
-    const dateFormatted = format(d, "d MMM yyyy hh:mm");
-    const ampm = format(d, "a").toLowerCase();
-    return `${dateFormatted} ${ampm}`;
+    try {
+      const d = new Date(`${dateStr}T19:00:00`);
+      if (isNaN(d.getTime())) return "TBD";
+      const dateFormatted = format(d, "d MMM yyyy hh:mm");
+      const ampm = format(d, "a").toLowerCase();
+      return `${dateFormatted} ${ampm}`;
+    } catch {
+      return "TBD";
+    }
   };
 
   const startDayMonth = cpsStartDate
-    ? format(new Date(`${cpsStartDate}T19:00:00`), "d MMMM")
+    ? (() => {
+        try {
+          const d = new Date(`${cpsStartDate}T19:00:00`);
+          if (isNaN(d.getTime())) return "TBD";
+          return format(d, "d MMMM");
+        } catch {
+          return "TBD";
+        }
+      })()
     : "TBD";
 
   const startFormatted = formatDate(cpsStartDate);

@@ -37,14 +37,26 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
     // Format helpers
     const formatCpsDate = (dateStr: string | undefined) => {
       if (!dateStr) return "TBD";
-      const d = new Date(`${dateStr}T19:00:00`);
-      return format(d, "d MMM yyyy • h:mm aa");
+      try {
+        const d = new Date(`${dateStr}T19:00:00`);
+        if (isNaN(d.getTime())) return "TBD";
+        return format(d, "d MMM yyyy • h:mm aa");
+      } catch {
+        return "TBD";
+      }
     };
 
     // Standard mode values
-    const startTimeStr = startDateTime
-      ? format(new Date(startDateTime), "MMM d, yyyy • h:mm aa")
-      : "Not specified";
+    const startTimeStr = (() => {
+      if (!startDateTime) return "Not specified";
+      try {
+        const d = new Date(startDateTime);
+        if (isNaN(d.getTime())) return "Not specified";
+        return format(d, "MMM d, yyyy • h:mm aa");
+      } catch {
+        return "Not specified";
+      }
+    })();
     const durationStr = formatDuration(duration);
 
     // CPS mode values (for CPC)

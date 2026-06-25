@@ -8,7 +8,7 @@ import { calculateTimeLeft } from "../utils/formatters";
  */
 export const useLiveTimeLeft = (startDateTime: string): string => {
   // Dummy state to force re-renders for live updates
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [tick, forceUpdate] = useReducer((x) => x + 1, 0);
 
   // Set up interval to trigger re-renders
   useEffect(() => {
@@ -18,5 +18,5 @@ export const useLiveTimeLeft = (startDateTime: string): string => {
   }, [startDateTime]);
 
   // Calculate value during render (cached with useMemo)
-  return useMemo(() => calculateTimeLeft(startDateTime), [startDateTime]);
+  return useMemo(() => calculateTimeLeft(startDateTime), [startDateTime, tick]);
 };

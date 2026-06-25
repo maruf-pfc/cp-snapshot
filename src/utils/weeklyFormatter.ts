@@ -18,8 +18,11 @@ export const formatWeeklyAnnouncement = ({
   const formatDay = (dateStr: string) => {
     if (!dateStr) return "TBD";
     // Parse without time component to avoid timezone shifts on the day label
-    const [year, month, day] = dateStr.split("-").map(Number);
+    const parts = dateStr.split("-").map(Number);
+    if (parts.length < 3 || parts.some(isNaN)) return "TBD";
+    const [year, month, day] = parts;
     const d = new Date(year, month - 1, day);
+    if (isNaN(d.getTime())) return "TBD";
     return d.toLocaleDateString("en-GB", {
       weekday: "long",
       day: "numeric",
