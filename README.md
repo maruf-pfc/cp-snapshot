@@ -22,15 +22,6 @@
 - 🔗 **Contest Link Support**: Include registration links in copied text
 - 🔒 **Privacy First**: No backend, no tracking, no data leaves your browser
 
-### CPS Academy Mode (`/cps`)
-- 📢 **CPC Contest Announcements**: Auto-formats Discord-ready `@everyone` messages for practice contests
-- 📅 **Auto End-Date**: Set start date — end date calculates automatically (+10 days)
-- 📣 **Missed Contest Generator**: One-click modal to generate announcements for learners who missed the start
-- ⏳ **Days Left Generator**: 1/2/3-day reminder announcements with a form modal
-- 📆 **Weekly Contest Announcements**: Separate page for Junior & Senior weekly contest Discord posts
-
----
-
 ## 🚀 Quick Start
 
 ### Prerequisites
