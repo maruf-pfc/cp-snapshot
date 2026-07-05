@@ -64,9 +64,6 @@ bun run preview
 | Route | Description |
 |---|---|
 | `/` | Standard contest card generator (Codeforces, LeetCode, etc.) |
-| `/cps` | Redirects to `/cps/cpc` |
-| `/cps/cpc` | CPS Academy — CPC practice contest announcements |
-| `/cps/weekly` | CPS Academy — Weekly Junior & Senior contest announcements |
 
 ---
 
@@ -99,12 +96,6 @@ bun run preview
 | Copy Announcement | Copy the main Discord `@everyone` announcement |
 | Missed Contest Announcement | Opens modal → generates "contest already started" post |
 | Days Left Announcement | Opens modal → generates "X days left" reminder post |
-
-### CPS Weekly Mode (`/cps/weekly`)
-
-Fill in contest number, date, time, and Junior/Senior links. The page generates a combined Discord announcement for both divisions.
-
----
 
 ## 🛠️ Tech Stack
 
