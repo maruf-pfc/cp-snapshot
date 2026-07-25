@@ -43,24 +43,24 @@ const CpsForm: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium mb-2 text-zinc-400">
-            Contest No
-          </label>
-          <input
-            type="text"
-            value={contestNo}
-            onChange={(e) => setContestNo(e.target.value)}
-            placeholder="e.g., 1"
-            className="input-field"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-400">
             Module No
           </label>
           <input
             type="text"
             value={moduleNo}
             onChange={(e) => setModuleNo(e.target.value)}
+            placeholder="e.g., 1"
+            className="input-field"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2 text-zinc-400">
+            Contest No
+          </label>
+          <input
+            type="text"
+            value={contestNo}
+            onChange={(e) => setContestNo(e.target.value)}
             placeholder="e.g., 1"
             className="input-field"
           />
