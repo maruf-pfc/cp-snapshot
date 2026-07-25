@@ -44,7 +44,6 @@ const WeeklyForm: React.FC = () => {
           min="1"
           value={weeklyContestNo}
           onChange={(e) => setWeeklyContestNo(e.target.value)}
-          placeholder="e.g., 86"
           className="input-field"
         />
       </div>
