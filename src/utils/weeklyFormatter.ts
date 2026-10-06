@@ -34,5 +34,5 @@ export const formatWeeklyAnnouncement = ({
   const jLink = juniorLink || "TBD";
   const sLink = seniorLink || "TBD";
 
-  return `@everyone \nJunior and Senior CPS Weekly Contests - ${no} ✨ \n\nWe're excited to announce that the Junior and Senior CPS Weekly Contests ${no} are scheduled for ${dayLabel} at ${weeklyTime}\n\n🔗 Junior Contest: If you're a beginner or working on building your confidence, join the Junior CPS Weekly Contest here: [Junior Contest Link.](${jLink})\n\n🔗 Senior Contest: For those who are comfortable with our previous contest challenges, the Senior CPS Weekly Contest is available here: [Senior Contest Link.](${sLink})\n\nBest of luck to everyone participating.`;
+  return `@everyone \nJunior and Senior CPS Weekly Contests - ${no} ✨ \n\nWe're excited to announce that the Junior and Senior CPS Weekly Contests ${no} are scheduled for ${dayLabel} at ${weeklyTime}.\n\n🔗 Junior Contest: If you're a beginner or working on building your confidence, join the Junior CPS Weekly Contest here: [Junior Contest Link](${jLink}).\n\n🔗 Senior Contest: For those who are comfortable with our previous contest challenges, the Senior CPS Weekly Contest is available here: [Senior Contest Link](${sLink}).\n\nBest of luck to everyone participating.`;
 };

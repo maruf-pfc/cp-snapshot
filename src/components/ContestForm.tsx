@@ -46,7 +46,7 @@ const ContestForm: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium mb-2 text-zinc-400">
-            Starts In
+            Start Time
           </label>
           <div className="relative">
             <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />

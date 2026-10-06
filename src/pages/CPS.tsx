@@ -258,7 +258,7 @@ const CPS: React.FC = () => {
                 <span className="w-1.5 h-5 bg-emerald-500 rounded-full" />
                 Platform
               </h2>
-              <p className="text-sm text-zinc-400">Vjudge selected by default</p>
+              <p className="text-sm text-zinc-400">Vjudge is selected by default</p>
               <div className="p-3 rounded-xl bg-zinc-800/50 border border-zinc-700 flex items-center gap-3">
                 <img
                   src={vjudge?.logo}

@@ -31,8 +31,8 @@ describe("formatWeeklyAnnouncement", () => {
     const text = formatWeeklyAnnouncement(data);
     expect(text).toContain("Junior and Senior CPS Weekly Contests - ?");
     expect(text).toContain("scheduled for TBD");
-    expect(text).toContain("Junior Contest Link.](TBD)");
-    expect(text).toContain("Senior Contest Link.](TBD)");
+    expect(text).toContain("Junior Contest Link](TBD).");
+    expect(text).toContain("Senior Contest Link](TBD).");
   });
 
   test("handles malformed date string safely", () => {

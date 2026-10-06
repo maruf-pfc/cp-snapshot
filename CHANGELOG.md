@@ -74,7 +74,7 @@ Add dedicated `/cps` route for CPS Academy contest announcements with:
 
 ### Routing & Config
 
-- `src/main.tsx` — Setup React Router with `/` and `/cps` routes
+- `src/main.tsx` — Set up React Router with `/` and `/cps` routes
 - `vite.config.ts` — Remove invalid historyApiFallback config
 
 ### UI Polish
@@ -114,6 +114,6 @@ Add dedicated `/cps` route for CPS Academy contest announcements with:
 
 - `/cps` is not linked from home page (intentionally private)
 - For production: add rewrite rules in vercel.json / netlify.toml for SPA routing
-- Optional: Add token-based access control for /cps route in future
+- Optional: Add token-based access control for /cps route in the future
 
 _Format based on [Keep a Changelog](https://keepachangelog.com/)_

@@ -60,7 +60,7 @@ Get ready for **${fullTitle || "TBD"}**, an exciting opportunity to test your un
 
 Whether you're just starting or brushing up on the basics, this is the perfect chance to learn, compete, and grow together. 🌱
 
-Be ready - the contest begins soon!
+Be ready — the contest begins soon!
 Best of luck, everyone.`;
 };
 

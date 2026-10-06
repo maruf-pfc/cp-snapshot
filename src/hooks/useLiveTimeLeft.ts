@@ -18,5 +18,8 @@ export const useLiveTimeLeft = (startDateTime: string): string => {
   }, [startDateTime]);
 
   // Calculate value during render (cached with useMemo)
-  return useMemo(() => calculateTimeLeft(startDateTime), [startDateTime, tick]);
+  return useMemo(() => {
+    void tick;
+    return calculateTimeLeft(startDateTime);
+  }, [startDateTime, tick]);
 };

@@ -49,7 +49,7 @@ const ActionButtons: React.FC = () => {
       a.href = url;
       a.click();
     } catch {
-      console.error("DL failed");
+      console.error("Download failed");
     }
     setTimeout(() => setDlState("idle"), 800);
   };

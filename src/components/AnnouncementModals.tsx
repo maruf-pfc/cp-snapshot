@@ -9,55 +9,34 @@ interface AnnouncementModalProps {
   type: "missed" | "daysLeft";
 }
 
-export const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
-  isOpen,
+const AnnouncementModalDialog: React.FC<Omit<AnnouncementModalProps, "isOpen">> = ({
   onClose,
   type,
 }) => {
-  // Local state for the form inputs
-  const [moduleNo, setModuleNo] = useState("");
-  const [contestNo, setContestNo] = useState("");
-  const [contestName, setContestName] = useState("");
-  const [contestLink, setContestLink] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [endTime, setEndTime] = useState<"07:00 PM" | "07:30 PM">("07:00 PM");
-  const [daysLeft, setDaysLeft] = useState(1);
-  const [copied, setCopied] = useState(false);
-
-  // Bug fix: destructure only the primitive values we need to avoid
-  // the entire store object as a dep (which triggers re-sync on every
-  // keystroke inside the modal, resetting user edits).
   const storeModuleNo = useContestStore((s) => s.moduleNo);
   const storeContestNo = useContestStore((s) => s.contestNo);
   const storeContestName = useContestStore((s) => s.contestName);
   const storeContestLink = useContestStore((s) => s.contestLink);
   const storeCpsEndDate = useContestStore((s) => s.cpsEndDate);
 
-  // Sync from store only when the modal first opens, not on every re-render
-  useEffect(() => {
-    if (isOpen) {
-      setModuleNo(storeModuleNo || "");
-      setContestNo(storeContestNo || "");
-      setContestName(storeContestName || "");
-      setContestLink(storeContestLink || "");
-      setEndDate(storeCpsEndDate || "");
-      setEndTime("07:00 PM");
-      setDaysLeft(1);
-      setCopied(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]); // intentionally only on open/close toggle
+  // Local state initialized fresh from store on modal mount
+  const [moduleNo, setModuleNo] = useState(storeModuleNo || "");
+  const [contestNo, setContestNo] = useState(storeContestNo || "");
+  const [contestName, setContestName] = useState(storeContestName || "");
+  const [contestLink, setContestLink] = useState(storeContestLink || "");
+  const [endDate, setEndDate] = useState(storeCpsEndDate || "");
+  const [endTime, setEndTime] = useState<"07:00 PM" | "07:30 PM">("07:00 PM");
+  const [daysLeft, setDaysLeft] = useState(1);
+  const [copied, setCopied] = useState(false);
 
   // Close modal on Escape key
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) onClose();
+      if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  }, [onClose]);
 
   // Format the end date + selected time
   const getFormattedEndDateTime = () => {
@@ -102,7 +81,7 @@ Best of luck, everyone 🌱`;
 
 Only ${daysLeft} ${daysLeft === 1 ? "day" : "days"} left before the **${titlePart || "TBD"}** practice contest ends.
 
-If you still haven't participated or solved enough problems yet, this is your final chance to practice and improve your understanding of the ${contestName || "TBD"}.
+If you still haven't participated or solved enough problems yet, this is your final chance to practice and improve your understanding of ${contestName || "TBD"}.
 
 🔗 Contest Link: ${safeLink}
 ⏳ Ends: ${endDateTimeStr}
@@ -326,4 +305,13 @@ Best of luck, everyone 🌱`;
       </div>
     </div>
   );
+};
+
+export const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
+  isOpen,
+  onClose,
+  type,
+}) => {
+  if (!isOpen) return null;
+  return <AnnouncementModalDialog key={type} onClose={onClose} type={type} />;
 };

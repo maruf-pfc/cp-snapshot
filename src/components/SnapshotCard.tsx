@@ -294,7 +294,7 @@ const SnapshotCard = forwardRef<HTMLDivElement, SnapshotCardProps>(
                 className="text-[10px] font-medium uppercase tracking-widest mb-1"
                 style={{ color: theme.textSec }}
               >
-                {isAnyCps ? "Duration" : "Duration"}
+                Duration
               </div>
               <div
                 className="text-sm font-medium"

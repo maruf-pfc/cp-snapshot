@@ -26,7 +26,7 @@
 
 ### Prerequisites
 
-- [Bun](https://bun.sh) (recommended) or Node.js 18+
+- [Bun](https://bun.sh) (recommended) or Node.js 24+
 
 ### Installation
 
@@ -255,7 +255,7 @@ Contributions are welcome!
 Found a bug? Open an [issue](https://github.com/maruf-pfc/cp-snapshot/issues) and include:
 - Browser + OS version
 - Steps to reproduce
-- Expected vs actual behaviour
+- Expected vs. actual behavior
 - Screenshot if visual
 
 ---
